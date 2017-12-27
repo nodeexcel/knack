@@ -18,6 +18,10 @@ app.get('/', function (req, res) {
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(bodyParser.json())
+app.use(bodyParser.text({ type: 'text/html' }))
+app.use(bodyParser.json({ type: 'application/*+json' }))
+
 // Sign In With Intuit, Connect To QuickBooks, or Get App Now
 // These calls will redirect to Intuit's authorization flow
 app.use('/sign_in_with_intuit', require('./routes/sign_in_with_intuit.js'))
