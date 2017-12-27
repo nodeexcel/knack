@@ -62,14 +62,11 @@ var Tools = function () {
         // Refresh the tokens
         tools.refreshTokens().then(function(newToken) {
           // Try API call again, with new accessToken
-          // console.log('new token generaated');
-          //requestObj.method = "GET",
           requestObj.headers.Authorization = 'Bearer ' + newToken.accessToken
           console.log('Trying again, making API call to: ' + requestObj.url)
           request(requestObj, function (err, response) {
             // Logic (including error checking) should be continued with new
             // err/response objects.
-           // console.log({err, response})
             resolve({err, response})
           })
         }, function(err) {
@@ -92,7 +89,6 @@ var Tools = function () {
       // Call refresh API
      token.refresh().then(function(newToken) {
         // Store the new tokens
-        //newToken = JSON.parse(JSON.stringify(newToken));
          tools.saveToken(newToken).then( () => {
           resolve(newToken);
         })  
