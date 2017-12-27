@@ -1,4 +1,5 @@
 var tools = require('../tools/tools.js')
+var getId = require('../tools/getId.js')
 var config = require('../config.json')
 var request = require('request')
 var express = require('express')
@@ -16,60 +17,87 @@ router.post('/', function (req, res) {
         if(!realmId) return res.json({
           error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
         })
-          console.log("body",req.body)
         var data =  {
-          "Name":/* "A" ,//*/ req.body.Name,
-          "Sku":/*"112", //*/ req.body.Sku,
-          "Description" : /*"", //*/ req.body.Description,
+          "Name": req.body.Name,
+          "Sku": req.body.Sku,
+          "Description" :req.body.Description,
           "IncomeAccountRef": {
-            "value": "79",  //dynamic  // req.body.incomeAccountRef.value,
-            "name": "Sales of Product Income"  // req.body.incomeAccountRef.name,
+            "name": req.body.IncomeAccountRefName  
           },
           "ExpenseAccountRef": {
-            "value": "80", //dynamic   // req.body.expenseAccountRef.value,
-            "name": "Cost of Goods Sold"   // req.body.expenseAccountRef.name,
+            "name": req.body.ExpenseAccountRefName   
           },
           "AssetAccountRef": {
-            "value": "81", //dynamic  // req.body.assetAccountRef.value,  
-            "name": "Inventory Asset"  // req.body.assetAccountRef.name,
+            "name": req.body.AssetAccountRefName
           },
-          "Type": "Inventory", //dynamic  // req.body.type,
-          "TrackQtyOnHand": true,   // req.body.trackQtyOnHand,
-          "QtyOnHand":/* 10,   // */(req.body.QtyOnHand),
-          "InvStartDate":/* "2015-01-01",   //*/ req.body.InvStartDate,
-          "PurchaseCost": /*10,   //*/ req.body.PurchaseCost,
-          "UnitPrice": /*12, //*/req.body.UnitPrice,
-          "PurchaseDesc": /*"", //*/ req.body.PurchaseDesc
-          // "PurchaseTaxCodeRef" : {
-          //   "value": "", //dynamic   // req.body.purchaseTaxCodeRef.value,
-          //   "name": ""   // req.body.purchaseTaxCodeRef.name,
-          // }
-          };
-        // Set up API call (with OAuth2 accessToken)
-        var url = config.api_uri +  realmId + '/item'
-        console.log('Making API call to: ' + url )
-        var requestObj = {
-          url: url,
-          method:"POST",
-          json:data,
-          headers: {
-            'Authorization': 'Bearer ' + token.accessToken
-          }
-        }
+          "Type":  req.body.type,
+          "TrackQtyOnHand": req.body.trackQtyOnHand,
+          "QtyOnHand":(req.body.QtyOnHand),
+          "InvStartDate":req.body.InvStartDate,
+          "PurchaseCost":req.body.PurchaseCost,
+          "UnitPrice": req.body.UnitPrice,
+          "PurchaseDesc": req.body.PurchaseDesc
 
-        // Make API call
-        request(requestObj, function (err, response) {
-          // Check if 401 response was returned - refresh tokens if so!
-          tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
-            if(err || response.statusCode != 200) {
-              return res.json({error: err, statusCode: response.statusCode,response:response.body})
+          };
+          getId.getId(req,res,req.body.IncomeAccountRefName).then((incomeid)=>{
+            if(incomeid){
+            data.IncomeAccountRef.value=incomeid;
+            }else{
+              getId.getId(req,res,"Sales of Product Income").then((defaultincomeid)=>{
+                if(defaultincomeid){
+                data.IncomeAccountRef.value=defaultincomeid,
+                data.IncomeAccountRef.name="Sales of Product Income";
+                }
+              }).catch(err=>console.log(err))
             }
-            // API Call was a success!
-            res.json(response.body)
-          }, function (err) {
-            return res.json(err)
-          })
-        })
+              getId.getId(req,res,req.body.ExpenseAccountRefName).then((expenseid)=>{ 
+                if(expenseid){
+                data.ExpenseAccountRef.value=expenseid
+                }else{
+                   getId.getId(req,res,"Cost of Goods Sold").then((defaultexpenseid)=>{
+                    if(defaultexpenseid){
+                    data.ExpenseAccountRef.value=defaultexpenseid,
+                    data.ExpenseAccountRef.name="Cost of Goods Sold";
+                    }
+                  }).catch(err=>console.log(err))                }
+                  getId.getId(req,res,req.body.AssetAccountRefName).then((assetid)=>{ 
+                     if(assetid){
+                     data.AssetAccountRef.value=assetid
+                     }else{
+                      getId.getId(req,res,"Inventory Asset").then((defaultassetid)=>{
+                        if(defaultassetid){
+                        data.AssetAccountRef.value=defaultassetid,
+                        data.AssetAccountRef.name="Inventory Asset";
+                        }
+                      }).catch(err=>console.log(err))                     }
+                        // Set up API call (with OAuth2 accessToken)
+                        var url = config.api_uri +  realmId + '/item'
+                        console.log('Making API call to: ' + url )
+                        var requestObj = {
+                          url: url,
+                          method:"POST",
+                          json:data,
+                          headers: {
+                            'Authorization': 'Bearer ' + token.accessToken
+                          }
+                        }
+
+                        // Make API call
+                        request(requestObj, function (err, response) {
+                          // Check if 401 response was returned - refresh tokens if so!
+                          tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
+                            if(err || response.statusCode != 200) {
+                              return res.json({error: err, statusCode: response.statusCode,response:response.body})
+                            }
+                            // API Call was a success!
+                            res.json(response.body)
+                          }, function (err) {
+                            return res.json(err)
+                          })
+                        })
+                  }).catch(err=>console.log(err))
+              }).catch(err=>console.log(err))
+          }).catch(err=>console.log(err))
      })
   });
   
