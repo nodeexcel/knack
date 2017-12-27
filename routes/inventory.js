@@ -30,9 +30,9 @@ router.post('/', function (req, res) {
           "AssetAccountRef": {
             "name": req.body.AssetAccountRefName
           },
-          "Type":  req.body.type,
-          "TrackQtyOnHand": req.body.trackQtyOnHand,
-          "QtyOnHand":(req.body.QtyOnHand),
+          "Type":  req.body.Type,
+          "TrackQtyOnHand": req.body.TrackQtyOnHand,
+          "QtyOnHand":req.body.QtyOnHand,
           "InvStartDate":req.body.InvStartDate,
           "PurchaseCost":req.body.PurchaseCost,
           "UnitPrice": req.body.UnitPrice,
