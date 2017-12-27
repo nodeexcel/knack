@@ -3,13 +3,14 @@ var config = require('./config.json')
 var express = require('express')
 var session = require('express-session')
 var app = express()
+var cors = require('cors');
 var bodyParser = require('body-parser');
 //var routes = require('./routes/auth.js')(app)
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({secret: 'secret', resave: 'false', saveUninitialized: 'false'}))
-
+app.use(cors());
 // Initial view - loads Connect To QuickBooks Button
 app.get('/', function (req, res) {
   res.render('home', config)
