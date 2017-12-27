@@ -16,6 +16,7 @@ router.post('/', function (req, res) {
         if(!realmId) return res.json({
           error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
         })
+          console.log("body",req.body)
         var data =  {
           "Name":/* "A" ,//*/ req.body.Name,
           "Sku":/*"112", //*/ req.body.Sku,
