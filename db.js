@@ -1,6 +1,6 @@
 var mongoose =require('mongoose');
 var Schema=mongoose.Schema;
-var conn =mongoose.connect('mongodb://localhost/knack_db');
+var conn =mongoose.connect('mongodb://sumit:java123@ds151232.mlab.com:51232/sumit');
 var session=mongoose.Schema({
 	// accessToken: { type: String, required: true },
  //    refreshToken:  { type: String, required: true },
