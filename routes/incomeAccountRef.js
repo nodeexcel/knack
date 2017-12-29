@@ -17,7 +17,7 @@ router.get('/', function (req, res) {
           error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
         })
         // Set up API call (with OAuth2 accessToken)
-        var query=`select Id from Account  where Name = '`+name+`'`
+        var query=`select * from Account  where Classification = 'Revenue'`
         var url = config.api_uri +  realmId + '/query?query='+ query;
         console.log('Making API call to: ' + url )
         var requestObj = {
@@ -38,8 +38,7 @@ router.get('/', function (req, res) {
               return res.json({error: err, statusCode: response.statusCode,error:response.body})
             }
             // API Call was a success!
-            var pars=(JSON.parse(response.body))
-            return pars.QueryResponse.Account[0].Id
+            res.json(JSON.parse(response.body))
           }, function (err) {
             return res.json(err)
           })

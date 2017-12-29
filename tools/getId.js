@@ -6,7 +6,8 @@ var router = express.Router()
  
 
 var account = function () {
-
+  let account=this;
+  
   this.getId = function(req,res,name) {
   return new Promise(function (resolve, reject) {
   let token ;
@@ -53,6 +54,69 @@ var account = function () {
      })
    });
   })
+  }
+
+  this.getIncomeAccountRef = function(req,res) {
+    return new Promise(function (resolve, reject) {
+      var IncomeAccountRef={};
+      account.getId(req,res,req.body.IncomeAccountRefName).then((incomeid)=>{
+          if(incomeid){
+          IncomeAccountRef.value=incomeid;
+          IncomeAccountRef.name=req.body.IncomeAccountRefName;
+          resolve(IncomeAccountRef);
+          }else{
+            account.getId(req,res,"Sales of Product Income").then((defaultincomeid)=>{
+              if(defaultincomeid){
+              IncomeAccountRef.value=defaultincomeid,
+              IncomeAccountRef.name="Sales of Product Income";
+              resolve(IncomeAccountRef);
+              }
+            }).catch(err=>console.log(err))
+          }
+        })
+    })
+  }
+
+  this.getExpenseAccountRef = function(req,res) {
+    return new Promise(function (resolve, reject) {
+      var ExpenseAccountRef={};
+      account.getId(req,res,req.body.ExpenseAccountRefName).then((expenseid)=>{ 
+          if(expenseid){
+          ExpenseAccountRef.value=expenseid
+          ExpenseAccountRef.name=req.body.ExpenseAccountRefName;
+          resolve(ExpenseAccountRef);
+          }else{
+             account.getId(req,res,"Cost of Goods Sold").then((defaultexpenseid)=>{
+              if(defaultexpenseid){
+              ExpenseAccountRef.value=defaultexpenseid,
+              ExpenseAccountRef.name="Cost of Goods Sold";
+              resolve(ExpenseAccountRef);
+              }
+            }).catch(err=>console.log(err))            
+          }
+       })
+      })   
+  }
+
+  this.getAssetAccountRef = function(req,res) {
+    return new Promise(function (resolve, reject) {
+      var AssetAccountRef={};
+      account.getId(req,res,req.body.AssetAccountRefName).then((assetid)=>{ 
+         if(assetid){
+        AssetAccountRef.value=assetid
+        AssetAccountRef.name=req.body.AssetAccountRefName;
+         resolve(AssetAccountRef);
+         }else{
+          account.getId(req,res,"Inventory Asset").then((defaultassetid)=>{
+            if(defaultassetid){
+           AssetAccountRef.value=defaultassetid,
+           AssetAccountRef.name="Inventory Asset";
+            resolve(AssetAccountRef)
+            }
+          }).catch(err=>console.log(err))
+         } 
+      })
+    })
   }
 }
 
