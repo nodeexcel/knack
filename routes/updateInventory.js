@@ -18,92 +18,94 @@ router.post('/', function (req, res) {
           error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
         })
         // Set up API call (with OAuth2 accessToken)
-
-        var query=`select * from Item  where Id = '`+ req.body.KnackId +`'`;
-        var url = config.api_uri +  realmId + '/query?query='+ query;
-        console.log('Making API call to: ' + url )
-        var requestObj = {
-          url: url,
-          method:"GET",
-          headers: {
-            'Authorization': 'Bearer ' + token.accessToken,
-            'content-type':  'application/json',
-            'Accept' :  'application/json',
-          }
-        }
-
-        // Make API call
-        request(requestObj, function (err, response) {
-          // Check if 401 response was returned - refresh tokens if so!
-          tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
-            if(err || response.statusCode != 200) {
-              return res.json({error: err, statusCode: response.statusCode,error:response.body})
+        tools.fetchId(req.body.KnackId).then((itemId)=>{
+          var query=`select * from Item  where Id = '`+ itemId +`'`;       
+          var url = config.api_uri +  realmId + '/query?query='+ query;
+          console.log('Making API call to: ' + url )
+          var requestObj = {
+            url: url,
+            method:"GET",
+            headers: {
+              'Authorization': 'Bearer ' + token.accessToken,
+              'content-type':  'application/json',
+              'Accept' :  'application/json',
             }
-            // API Call was a success!
-                var data =  {
-                  "Name": req.body.Name,
-                  "Sku": req.body.Sku,
-                  "Description" :req.body.Description,
-                  "IncomeAccountRef": {
-                    "name": req.body.IncomeAccountRefName  
-                  },
-                  "ExpenseAccountRef": {
-                    "name": req.body.ExpenseAccountRefName   
-                  },
-                  "AssetAccountRef": {
-                    "name": req.body.AssetAccountRefName
-                  },
-                  "Type":  req.body.Type,
-                  "TrackQtyOnHand": req.body.TrackQtyOnHand,
-                  "QtyOnHand":req.body.QtyOnHand,
-                  "InvStartDate":req.body.InvStartDate,
-                  "PurchaseCost":req.body.PurchaseCost,
-                  "UnitPrice": req.body.UnitPrice,
-                  "PurchaseDesc": req.body.PurchaseDesc
-                };
-                      
-               let resBody=(JSON.parse(response.body))
-               // console.log(resBody.QueryResponse.Item[0])
-               // if(data.QtyOnHand==resBody.QueryResponse.Item[0].QtyOnHand){
-                 data.SyncToken=resBody.QueryResponse.Item[0].SyncToken;
-                 data.Id=resBody.QueryResponse.Item[0].SyncToken;
-               // }else{
-               //  getId.updateInventoryQuantityAdjustment(req,res)
-               // }
-               
-                getId.getIncomeAccountRef(req,res).then((incomeAccountRef)=>{
-                  data.IncomeAccountRef=incomeAccountRef;
-                    getId.getExpenseAccountRef(req,res).then((expenseAccountRef)=>{ 
-                     data.ExpenseAccountRef=expenseAccountRef;
-                        getId.getAssetAccountRef(req,res).then((assetAccountRef)=>{ 
-                          data.AssetAccountRef=assetAccountRef      
+          }
 
-                          var url = config.api_uri +  realmId + '/item?operation=update'
-                          console.log('Making API call to: ' + url )
-                          var requestObj = {
-                            url: url,
-                            method:"POST",
-                            json:data,
-                            headers: {
-                              'Authorization': 'Bearer ' + token.accessToken
-                            }
-                          }
+          // Make API call
+          request(requestObj, function (err, response) {
+            // Check if 401 response was returned - refresh tokens if so!
+            tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
+              if(err || response.statusCode != 200) {
+                return res.json({error: err, statusCode: response.statusCode,error:response.body})
+              }
+              // API Call was a success!
+                  var data =  {
+                    "Name": req.body.Name,
+                    "Sku": req.body.Sku,
+                    "Description" :req.body.Description,
+                    "IncomeAccountRef": {
+                      "name": req.body.IncomeAccountRefName  
+                    },
+                    "ExpenseAccountRef": {
+                      "name": req.body.ExpenseAccountRefName   
+                    },
+                    "AssetAccountRef": {
+                      "name": req.body.AssetAccountRefName
+                    },
+                    "Type":  req.body.Type,
+                    "TrackQtyOnHand": req.body.TrackQtyOnHand,
+                    "QtyOnHand":req.body.QtyOnHand,
+                    "InvStartDate":req.body.InvStartDate,
+                    "PurchaseCost":req.body.PurchaseCost,
+                    "UnitPrice": req.body.UnitPrice,
+                    "PurchaseDesc": req.body.PurchaseDesc
+                  };
+                        
+                 let resBody=(JSON.parse(response.body))
+                 // console.log(resBody.QueryResponse.Item[0])
+                 // if(data.QtyOnHand==resBody.QueryResponse.Item[0].QtyOnHand){
+                   data.SyncToken=resBody.QueryResponse.Item[0].SyncToken;
+                   data.Id=resBody.QueryResponse.Item[0].Id;
+                 // }else{
+                 //  getId.updateInventoryQuantityAdjustment(req,res)
+                 // }
+                 
+                  getId.getIncomeAccountRef(req,res).then((incomeAccountRef)=>{
+                    data.IncomeAccountRef=incomeAccountRef;
+                      getId.getExpenseAccountRef(req,res).then((expenseAccountRef)=>{ 
+                       data.ExpenseAccountRef=expenseAccountRef;
+                          getId.getAssetAccountRef(req,res).then((assetAccountRef)=>{ 
+                            data.AssetAccountRef=assetAccountRef      
 
-                          // Make API call
-                          request(requestObj, function (err, response) {
-                            // Check if 401 response was returned - refresh tokens if so!
-                            tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
-                              if(err || response.statusCode != 200) {
-                                return res.json({error: err, statusCode: response.statusCode,error:response.body})
+                            var url = config.api_uri +  realmId + '/item?operation=update'
+                            console.log('Making API call to: ' + url )
+                            console.log(data)
+                            var requestObj = {
+                              url: url,
+                              method:"POST",
+                              json:data,
+                              headers: {
+                                'Authorization': 'Bearer ' + token.accessToken
                               }
-                              // API Call was a success!
-                              res.json(response.body)
-                            }, function (err) {
-                              return res.json(err)
-                            })         
-                        })
-                    })
-               });
+                            }
+
+                            // Make API call
+                            request(requestObj, function (err, response) {
+                              // Check if 401 response was returned - refresh tokens if so!
+                              tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
+                                if(err || response.statusCode != 200) {
+                                  return res.json({error: err, statusCode: response.statusCode,error:response.body})
+                                }
+                                // API Call was a success!
+                                res.json(response.body)
+                              }, function (err) {
+                                return res.json(err)
+                              })         
+                          })
+                      })
+                 });
+            })
           })
         })
       })
