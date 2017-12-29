@@ -39,40 +39,16 @@ router.post('/', function (req, res) {
           "PurchaseDesc": req.body.PurchaseDesc
 
           };
-          getId.getId(req,res,req.body.IncomeAccountRefName).then((incomeid)=>{
-            if(incomeid){
-            data.IncomeAccountRef.value=incomeid;
-            }else{
-              getId.getId(req,res,"Sales of Product Income").then((defaultincomeid)=>{
-                if(defaultincomeid){
-                data.IncomeAccountRef.value=defaultincomeid,
-                data.IncomeAccountRef.name="Sales of Product Income";
-                }
-              }).catch(err=>console.log(err))
-            }
-              getId.getId(req,res,req.body.ExpenseAccountRefName).then((expenseid)=>{ 
-                if(expenseid){
-                data.ExpenseAccountRef.value=expenseid
-                }else{
-                   getId.getId(req,res,"Cost of Goods Sold").then((defaultexpenseid)=>{
-                    if(defaultexpenseid){
-                    data.ExpenseAccountRef.value=defaultexpenseid,
-                    data.ExpenseAccountRef.name="Cost of Goods Sold";
-                    }
-                  }).catch(err=>console.log(err))                }
-                  getId.getId(req,res,req.body.AssetAccountRefName).then((assetid)=>{ 
-                     if(assetid){
-                     data.AssetAccountRef.value=assetid
-                     }else{
-                      getId.getId(req,res,"Inventory Asset").then((defaultassetid)=>{
-                        if(defaultassetid){
-                        data.AssetAccountRef.value=defaultassetid,
-                        data.AssetAccountRef.name="Inventory Asset";
-                        }
-                      }).catch(err=>console.log(err))                     }
+          getId.getIncomeAccountRef(req,res).then((incomeAccountRef)=>{
+            data.IncomeAccountRef=incomeAccountRef;
+              getId.getExpenseAccountRef(req,res).then((expenseAccountRef)=>{ 
+               data.ExpenseAccountRef=expenseAccountRef;
+                  getId.getAssetAccountRef(req,res).then((assetAccountRef)=>{ 
+                    data.AssetAccountRef=assetAccountRef
                         // Set up API call (with OAuth2 accessToken)
                         var url = config.api_uri +  realmId + '/item'
                         console.log('Making API call to: ' + url )
+                        console.log("data",data)
                         var requestObj = {
                           url: url,
                           method:"POST",
@@ -90,6 +66,7 @@ router.post('/', function (req, res) {
                               return res.json({error: err, statusCode: response.statusCode,response:response.body})
                             }
                             // API Call was a success!
+                            tools.saveId(req.body.KnackId,response.body.Item.Id)
                             res.json(response.body)
                           }, function (err) {
                             return res.json(err)

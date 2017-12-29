@@ -2,15 +2,18 @@ var mongoose =require('mongoose');
 var Schema=mongoose.Schema;
 var conn =mongoose.connect('mongodb://sumit:java123@ds151232.mlab.com:51232/sumit');
 var session=mongoose.Schema({
-	// accessToken: { type: String, required: true },
- //    refreshToken:  { type: String, required: true },
- //    tokenType:  { type: String, required: true },
- //    data:  { type: String, required: true }
 }, {
    collection: 'session',
    strict: false
 });
+var idInfo=mongoose.Schema({
+}, {
+   collection: 'ids',
+   strict: false
+});
 var session = conn.model('session', session);
+var idInfo = conn.model('idsInfo', idInfo);
 module.exports = {
-   knack_session: session  
+   knack_session: session ,
+   storedIds: idInfo
 }
