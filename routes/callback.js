@@ -14,7 +14,6 @@ router.get('/', function (req, res) {
   tools.intuitAuth.code.getToken(req.originalUrl).then(function (token) {
     // Store token - this would be where tokens would need to be
     // persisted (in a SQL DB, for example).
-     console.log("token:",token)
     tools.saveToken( token,req.query.realmId)
     //req.session.realmId = req.query.realmId
 

@@ -85,8 +85,9 @@ router.get('/refresh', function (req, res) {
   tools.getToken().then((fetchedToken)=>{
      token=fetchedToken;
     if(!token) return res.json({error: 'Not authorized'})
-
+      console.log("fetched",fetchedToken)
     tools.refreshTokens().then(function(newToken) {
+      console.log("new",newToken)
       // We have new tokens!
       res.json({
         accessToken: newToken.accessToken,

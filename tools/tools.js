@@ -227,29 +227,27 @@ var Tools = function () {
                if (err) {
                   console.log(err)
                } else{
-                            console.log(data)
+                  console.log(data)
                   console.log("Ids saved")
                }
               })
     })
   }
   this.fetchId = function(KnackId) {
-    // return new Promise( (resolve, reject)=> {
+     return new Promise( (resolve, reject)=> {
       db.storedIds.findOne({knackId:KnackId}).exec((err,data)=>{
         if(err){
           console.log(err)
         }else{
           if(data){
-            console.log(data)
             data = JSON.parse(JSON.stringify(data));
-             console.log("data",data.quickbookId)
-            return data 
+            resolve(data.quickbookId); 
           }else{
            console.log("data not found");
           }
         }
       })
-  //  })
+    })
   }
 
   this.refreshEndpoints()
