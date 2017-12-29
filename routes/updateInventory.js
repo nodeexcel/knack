@@ -63,13 +63,13 @@ router.post('/', function (req, res) {
                 };
                       
                let resBody=(JSON.parse(response.body))
-               console.log(resBody.QueryResponse.Item[0])
-               if(data.QtyOnHand==resBody.QueryResponse.Item[0].QtyOnHand){
+               // console.log(resBody.QueryResponse.Item[0])
+               // if(data.QtyOnHand==resBody.QueryResponse.Item[0].QtyOnHand){
                  data.SyncToken=resBody.QueryResponse.Item[0].SyncToken;
                  data.Id=resBody.QueryResponse.Item[0].SyncToken;
-               }else{
-                getId.updateInventoryQuantityAdjustment(req,res)
-               }
+               // }else{
+               //  getId.updateInventoryQuantityAdjustment(req,res)
+               // }
                
                 getId.getIncomeAccountRef(req,res).then((incomeAccountRef)=>{
                   data.IncomeAccountRef=incomeAccountRef;
