@@ -6,14 +6,21 @@ var session=mongoose.Schema({
    collection: 'session',
    strict: false
 });
-var idInfo=mongoose.Schema({
+var itemIdInfo=mongoose.Schema({
 }, {
-   collection: 'ids',
+   collection: 'itemIds',
+   strict: false
+});
+var customerIdInfo=mongoose.Schema({
+}, {
+   collection: 'customerIds',
    strict: false
 });
 var session = conn.model('session', session);
-var idInfo = conn.model('idsInfo', idInfo);
+var itemIdInfo = conn.model('itemIdInfo', itemIdInfo);
+var customerIdInfo = conn.model('customerIdInfo', customerIdInfo);
 module.exports = {
    knack_session: session ,
-   storedIds: idInfo
+   storedItemIds: itemIdInfo,
+   storedCustomerIds: customerIdInfo
 }

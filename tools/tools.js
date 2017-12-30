@@ -217,9 +217,9 @@ var Tools = function () {
     //   session.tokenType, session.data
     // )
   }
-  this.saveId = function(KnackId,ItemId) {
+  this.saveItemId = function(KnackId,ItemId) {
     return new Promise( (resolve, reject)=> {
-    let idsInfo = new db.storedIds({
+    let idsInfo = new db.storedItemIds({
             quickbookId:ItemId,
             knackId: KnackId
            })
@@ -227,15 +227,76 @@ var Tools = function () {
                if (err) {
                   console.log(err)
                } else{
-                  console.log(data)
                   console.log("Ids saved")
                }
               })
     })
   }
-  this.fetchId = function(KnackId) {
+  this.saveCustomerId = function(KnackId,CustomerId) {
+    return new Promise( (resolve, reject)=> {
+    let idsInfo = new db.storedCustomerIds({
+            quickbookId:CustomerId,
+            knackId: KnackId
+           })
+           idsInfo.save((err, data)=> {
+               if (err) {
+                  console.log(err)
+               } else{
+                  console.log("Ids saved")
+               }
+              })
+    })
+  }
+  this.saveSupplierId = function(KnackId,SupplierId) {
+    return new Promise( (resolve, reject)=> {
+    let idsInfo = new db.storedSupplierIds({
+            quickbookId:SupplierId,
+            knackId: KnackId
+           })
+           idsInfo.save((err, data)=> {
+               if (err) {
+                  console.log(err)
+               } else{
+                  console.log("Ids saved")
+               }
+              })
+    })
+  }
+  this.fetchItemId = function(KnackId) {
      return new Promise( (resolve, reject)=> {
-      db.storedIds.findOne({knackId:KnackId}).exec((err,data)=>{
+      db.storedItemIds.findOne({knackId:KnackId}).exec((err,data)=>{
+        if(err){
+          console.log(err)
+        }else{
+          if(data){
+            data = JSON.parse(JSON.stringify(data));
+            resolve(data.quickbookId); 
+          }else{
+           console.log("data not found");
+          }
+        }
+      })
+    })
+  }
+  this.fetchCustomerId = function(KnackId) {
+     return new Promise( (resolve, reject)=> {
+      db.storedCustomerIds.findOne({knackId:KnackId}).exec((err,data)=>{
+        if(err){
+          console.log(err)
+        }else{
+          if(data){
+            data = JSON.parse(JSON.stringify(data));
+            resolve(data.quickbookId); 
+          }else{
+           console.log("data not found");
+          }
+        }
+      })
+    })
+  }
+  this.fetchSupplierId = function(KnackId) {
+     return new Promise( (resolve, reject)=> {
+      db.storedSupplierIds.findOne({knackId:KnackId}).exec((err,data)=>{
         if(err){
           console.log(err)
         }else{
