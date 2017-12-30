@@ -9,52 +9,149 @@ var account = function () {
   let account=this;
   
   this.getId = function(req,res,name) {
-  return new Promise(function (resolve, reject) {
-  let token ;
+    return new Promise(function (resolve, reject) {
+    let token ;
 
-  tools.getRelmId().then( (realmId) => {
-        tools.getToken().then((fetchedToken)=>{
-           token=fetchedToken;
-        if(!token) return res.json({error: 'Not authorized'})
-        if(!realmId) return res.json({
-          error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
-        })
-        // Set up API call (with OAuth2 accessToken)
-        var query=`select * from Account  where Name = '`+ name +`'`;
-        var url = config.api_uri +  realmId + '/query?query='+ query;
-        console.log('Making API call to: ' + url )
-        var requestObj = {
-          url: url,
-          method:"GET",
-          headers: {
-            'Authorization': 'Bearer ' + token.accessToken,
-            'content-type':  'application/json',
-            'Accept' :  'application/json',
-          }
-        }
-
-        // Make API call
-        request(requestObj, function (err, response) {
-          // Check if 401 response was returned - refresh tokens if so!
-          tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
-            if(err || response.statusCode != 200) {
-              return res.json({error: err, statusCode: response.statusCode,error:response.body})
-            }
-            // API Call was a success!
-             var pars=(JSON.parse(response.body))
-             if(pars.QueryResponse.Account){
-               resolve(pars.QueryResponse.Account[0].Id)          
-             }else{
-                resolve()
-             }
-          }, function (err) {
-            return res.json(err)
+    tools.getRelmId().then( (realmId) => {
+          tools.getToken().then((fetchedToken)=>{
+             token=fetchedToken;
+          if(!token) return res.json({error: 'Not authorized'})
+          if(!realmId) return res.json({
+            error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
           })
-        })
-     })
-   });
-  })
+          // Set up API call (with OAuth2 accessToken)
+          var query=`select * from Account  where Name = '`+ name +`'`;
+          var url = config.api_uri +  realmId + '/query?query='+ query;
+          console.log('Making API call to: ' + url )
+          var requestObj = {
+            url: url,
+            method:"GET",
+            headers: {
+              'Authorization': 'Bearer ' + token.accessToken,
+              'content-type':  'application/json',
+              'Accept' :  'application/json',
+            }
+          }
+
+          // Make API call
+          request(requestObj, function (err, response) {
+            // Check if 401 response was returned - refresh tokens if so!
+            tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
+              if(err || response.statusCode != 200) {
+                return res.json({error: err, statusCode: response.statusCode,error:response.body})
+              }
+              // API Call was a success!
+               var pars=(JSON.parse(response.body))
+               if(pars.QueryResponse.Account){
+                 resolve(pars.QueryResponse.Account[0].Id)          
+               }else{
+                  resolve()
+               }
+            }, function (err) {
+              return res.json(err)
+            })
+          })
+       })
+     });
+    })
   }
+
+  this.getTermId = function(req,res,name) {
+    return new Promise(function (resolve, reject) {
+    let token ;
+
+    tools.getRelmId().then( (realmId) => {
+          tools.getToken().then((fetchedToken)=>{
+             token=fetchedToken;
+          if(!token) return res.json({error: 'Not authorized'})
+          if(!realmId) return res.json({
+            error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
+          })
+          // Set up API call (with OAuth2 accessToken)
+          var query=`select * from Term  where Name = '`+ name +`'`;
+          var url = config.api_uri +  realmId + '/query?query='+ query;
+          console.log('Making API call to: ' + url )
+          var requestObj = {
+            url: url,
+            method:"GET",
+            headers: {
+              'Authorization': 'Bearer ' + token.accessToken,
+              'content-type':  'application/json',
+              'Accept' :  'application/json',
+            }
+          }
+
+          // Make API call
+          request(requestObj, function (err, response) {
+            // Check if 401 response was returned - refresh tokens if so!
+            tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
+              if(err || response.statusCode != 200) {
+                return res.json({error: err, statusCode: response.statusCode,error:response.body})
+              }
+              // API Call was a success!
+               var pars=(JSON.parse(response.body))
+               if(pars.QueryResponse.Term){
+                 resolve({"value":pars.QueryResponse.Term[0].Id,"name":pars.QueryResponse.Term[0].Name})          
+               }else{
+                  resolve()
+               }
+            }, function (err) {
+              return res.json(err)
+            })
+          })
+       })
+     });
+    })
+  }
+
+  this.getPaymentMethodId = function(req,res,name) {
+    return new Promise(function (resolve, reject) {
+    let token ;
+
+    tools.getRelmId().then( (realmId) => {
+          tools.getToken().then((fetchedToken)=>{
+             token=fetchedToken;
+          if(!token) return res.json({error: 'Not authorized'})
+          if(!realmId) return res.json({
+            error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
+          })
+          // Set up API call (with OAuth2 accessToken)
+          var query=`select * from PaymentMethod  where Name = '`+ name +`'`;
+          var url = config.api_uri +  realmId + '/query?query='+ query;
+          console.log('Making API call to: ' + url )
+          var requestObj = {
+            url: url,
+            method:"GET",
+            headers: {
+              'Authorization': 'Bearer ' + token.accessToken,
+              'content-type':  'application/json',
+              'Accept' :  'application/json',
+            }
+          }
+
+          // Make API call
+          request(requestObj, function (err, response) {
+            // Check if 401 response was returned - refresh tokens if so!
+            tools.checkForUnauthorized(req, requestObj, err, response).then(function ({err, response}) {
+              if(err || response.statusCode != 200) {
+                return res.json({error: err, statusCode: response.statusCode,error:response.body})
+              }
+              // API Call was a success!
+               var pars=(JSON.parse(response.body))
+               if(pars.QueryResponse.PaymentMethod){
+                resolve({"value":pars.QueryResponse.PaymentMethod[0].Id,"name":pars.QueryResponse.PaymentMethod[0].Name})
+               }else{
+                  resolve()
+               }
+            }, function (err) {
+              return res.json(err)
+            })
+          })
+       })
+     });
+    })
+  }
+
 
   this.getIncomeAccountRef = function(req,res) {
     return new Promise(function (resolve, reject) {

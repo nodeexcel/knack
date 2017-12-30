@@ -18,7 +18,7 @@ router.post('/', function (req, res) {
           error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
         })
         // Set up API call (with OAuth2 accessToken)
-        tools.fetchId(req.body.KnackId).then((itemId)=>{
+        tools.fetchItemId(req.body.KnackId).then((itemId)=>{
           var query=`select * from Item  where Id = '`+ itemId +`'`;       
           var url = config.api_uri +  realmId + '/query?query='+ query;
           console.log('Making API call to: ' + url )
@@ -63,13 +63,8 @@ router.post('/', function (req, res) {
                   };
                         
                  let resBody=(JSON.parse(response.body))
-                 // console.log(resBody.QueryResponse.Item[0])
-                 // if(data.QtyOnHand==resBody.QueryResponse.Item[0].QtyOnHand){
                    data.SyncToken=resBody.QueryResponse.Item[0].SyncToken;
                    data.Id=resBody.QueryResponse.Item[0].Id;
-                 // }else{
-                 //  getId.updateInventoryQuantityAdjustment(req,res)
-                 // }
                  
                   getId.getIncomeAccountRef(req,res).then((incomeAccountRef)=>{
                     data.IncomeAccountRef=incomeAccountRef;

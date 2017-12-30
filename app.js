@@ -34,7 +34,10 @@ app.use('/getInventory', require('./routes/getInventory.js'))
 app.use('/expenseAccountRef', require('./routes/expenseAccountRef.js'))  
 app.use('/incomeAccountRef', require('./routes/incomeAccountRef.js'))  
 app.use('/assetAccountRef', require('./routes/assetAccountRef.js'))  
-app.use('/purchaseTaxCodeRef', require('./routes/purchaseTaxCodeRef.js'))  
+app.use('/purchaseTaxCodeRef', require('./routes/purchaseTaxCodeRef.js'))
+app.use('/updateInventoryQuantityAdjustment', require('./routes/updateInventoryQuantityAdjustment.js'))  
+app.use('/addCustomer', require('./routes/addCustomer.js')) 
+app.use('/updateCustomer', require('./routes/updateCustomer.js'))  
 // Callback - called via redirect_uri after authorization
 app.use('/callback', require('./routes/callback.js'))
 
