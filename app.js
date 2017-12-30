@@ -38,6 +38,8 @@ app.use('/purchaseTaxCodeRef', require('./routes/purchaseTaxCodeRef.js'))
 app.use('/updateInventoryQuantityAdjustment', require('./routes/updateInventoryQuantityAdjustment.js'))  
 app.use('/addCustomer', require('./routes/addCustomer.js')) 
 app.use('/updateCustomer', require('./routes/updateCustomer.js'))  
+app.use('/addSupplier', require('./routes/addSupplier.js'))  
+app.use('/updateSupplier', require('./routes/updateSupplier.js'))  
 // Callback - called via redirect_uri after authorization
 app.use('/callback', require('./routes/callback.js'))
 
