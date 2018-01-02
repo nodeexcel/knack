@@ -63,7 +63,7 @@ router.post('/', function (req, res) {
                     return res.json({error: err, statusCode: response.statusCode,response:response.body})
                   }
                   // API Call was a success!
-                  tools.saveSupplierId(req.body.KnackId,response.body.Vendor.Id)
+                  tools.saveSupplierId(req.body.KnackID,response.body.Vendor.Id)
                   res.json(response.body)
                 }, function (err) {
                   return res.json(err)

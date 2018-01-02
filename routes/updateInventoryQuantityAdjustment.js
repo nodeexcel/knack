@@ -53,7 +53,7 @@ router.post('/', function (req, res) {
                               return res.json({error: err, statusCode: response.statusCode,response:response.body})
                             }
                             // API Call was a success!
-                            tools.saveId(req.body.KnackId,response.body.Item.Id)
+                            tools.saveId(req.body.KnackID,response.body.Item.Id)
                             res.json(response.body)
                           }, function (err) {
                             return res.json(err)
