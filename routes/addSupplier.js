@@ -69,7 +69,7 @@ router.post('/', function (req, res) {
                   return res.json(err)
                 })
               })
-            }) 
+            }).catch(err=>console.log(err)) 
        })
   });
   

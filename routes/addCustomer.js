@@ -18,34 +18,34 @@ router.post('/', function (req, res) {
           error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
         })
         var data =  {
-            "BillAddr": {
-                "Line1": req.body.BillingStreet,
-                "City": req.body.BillingCity,
-                "Country": req.body.BillingCountry,
-                "CountrySubDivisionCode": req.body.BillingProvince,
-                "PostalCode": req.body.BillingPostalCode
-            },
-            "Notes": req.body.Notes,
-          //"TaxRegistrationNumber":req.body.TaxRegNo,
-            "PaymentMethodRef":{
-              "name":req.body.PaymentMethod
-            } ,
-            "SalesTermRef":{
-              "name" :req.body.Terms
-            },
-            "PreferredDeliveryMethod": "None",
-            "CompanyName": req.body.CompanyName,
-            // "CurrencyRef": {
-            //       "value": "CAD",
-            //       "name": "Canadian Dollar"
-            // },
-            "DisplayName": req.body.CompanyName,
-            "PrimaryPhone": {
-                "FreeFormNumber": req.body.Contacts
-            },
-            "PrimaryEmailAddr": {
-                "Address": req.body.BillingEmail
-            }
+                "BillAddr": {
+                    "Line1": req.body.BillingStreet,
+                    "City": req.body.BillingCity,
+                    "Country": req.body.BillingCountry,
+                    "CountrySubDivisionCode": req.body.BillingProvince,
+                    "PostalCode": req.body.BillingPostalCode
+                },
+                "Notes": req.body.Notes,
+                //"TaxRegistrationNumber":req.body.TaxRegNo,
+                "PaymentMethodRef":{
+                  "name":req.body.PaymentMethod
+                } ,
+                "SalesTermRef":{
+                  "name" :req.body.Terms
+                },
+                "PreferredDeliveryMethod": "None",
+                "CompanyName": req.body.CompanyName,
+                // "CurrencyRef": {
+                //       "value": "CAD",
+                //       "name": "Canadian Dollar"
+                // },
+                "DisplayName": req.body.CompanyName,
+                "PrimaryPhone": {
+                    "FreeFormNumber": req.body.Contacts
+                },
+                "PrimaryEmailAddr": {
+                    "Address": req.body.BillingEmail
+                }
             };
          getId.getPaymentMethodId(req,res,req.body.PaymentMethod).then((paymentMethodref)=>{
             data.PaymentMethodRef=paymentMethodref;
@@ -77,8 +77,8 @@ router.post('/', function (req, res) {
                     return res.json(err)
                   })
                 })
-              })
-          })  
+              }).catch(err=>console.log(err))
+          }).catch(err=>console.log(err))  
        })
   });
   

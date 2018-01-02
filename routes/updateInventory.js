@@ -75,7 +75,6 @@ router.post('/', function (req, res) {
 
                             var url = config.api_uri +  realmId + '/item?operation=update'
                             console.log('Making API call to: ' + url )
-                            console.log(data)
                             var requestObj = {
                               url: url,
                               method:"POST",
@@ -98,9 +97,9 @@ router.post('/', function (req, res) {
                                 return res.json(err)
                               })         
                           })
-                      })
-                 });
-            })
+                      }).catch(err=>console.log(err))
+                 }).catch(err=>console.log(err))
+            }).catch(err=>console.log(err))
           })
         })
       })
