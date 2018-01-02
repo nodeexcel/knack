@@ -252,7 +252,7 @@ var Tools = function () {
                if (err) {
                   console.log(err)
                } else{
-                  console.log("Ids saved")
+                  console.log("Ids saved",req.body.KnackId)
                }
               })
   }
