@@ -218,7 +218,6 @@ var Tools = function () {
     // )
   }
   this.saveItemId = function(KnackId,ItemId) {
-    return new Promise( (resolve, reject)=> {
     let idsInfo = new db.storedItemIds({
             quickbookId:ItemId,
             knackId: KnackId
@@ -230,10 +229,8 @@ var Tools = function () {
                   console.log("Ids saved")
                }
               })
-    })
   }
   this.saveCustomerId = function(KnackId,CustomerId) {
-    return new Promise( (resolve, reject)=> {
     let idsInfo = new db.storedCustomerIds({
             quickbookId:CustomerId,
             knackId: KnackId
@@ -245,10 +242,8 @@ var Tools = function () {
                   console.log("Ids saved")
                }
               })
-    })
   }
   this.saveSupplierId = function(KnackId,SupplierId) {
-    return new Promise( (resolve, reject)=> {
     let idsInfo = new db.storedSupplierIds({
             quickbookId:SupplierId,
             knackId: KnackId
@@ -260,19 +255,18 @@ var Tools = function () {
                   console.log("Ids saved")
                }
               })
-    })
   }
   this.fetchItemId = function(KnackId) {
      return new Promise( (resolve, reject)=> {
       db.storedItemIds.findOne({knackId:KnackId}).exec((err,data)=>{
         if(err){
-          console.log(err)
+          reject(err)
         }else{
           if(data){
             data = JSON.parse(JSON.stringify(data));
             resolve(data.quickbookId); 
           }else{
-           console.log("data not found");
+           reject("data not found");
           }
         }
       })
@@ -282,13 +276,13 @@ var Tools = function () {
      return new Promise( (resolve, reject)=> {
       db.storedCustomerIds.findOne({knackId:KnackId}).exec((err,data)=>{
         if(err){
-          console.log(err)
+          reject(err)
         }else{
           if(data){
             data = JSON.parse(JSON.stringify(data));
             resolve(data.quickbookId); 
           }else{
-           console.log("data not found");
+           reject("data not found");
           }
         }
       })
@@ -298,13 +292,13 @@ var Tools = function () {
      return new Promise( (resolve, reject)=> {
       db.storedSupplierIds.findOne({knackId:KnackId}).exec((err,data)=>{
         if(err){
-          console.log(err)
+          reject(err)
         }else{
           if(data){
             data = JSON.parse(JSON.stringify(data));
             resolve(data.quickbookId); 
           }else{
-           console.log("data not found");
+           reject("data not found");
           }
         }
       })
