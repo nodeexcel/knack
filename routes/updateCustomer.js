@@ -49,7 +49,7 @@ router.post('/', function (req, res) {
                     "PostalCode": req.body.BillingPostalCode
                 },
                 "Notes": req.body.Notes,
-                //"TaxRegistrationNumber":req.body.TaxRegNo,
+                //"taxRegistrationNumber":req.body.TaxRegNo,
                 "PaymentMethodRef":{
                   "name":req.body.PaymentMethod
                 } ,
