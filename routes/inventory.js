@@ -46,7 +46,7 @@ router.post('/', function (req, res) {
                   getId.getAssetAccountRef(req,res).then((assetAccountRef)=>{ 
                     data.AssetAccountRef=assetAccountRef
                         // Set up API call (with OAuth2 accessToken)
-                        var url = config.api_uri +  realmId + '/item'
+                        var url = config.api_uri +  realmId + '/item?minorversion=14'
                         console.log('Making API call to: ' + url )
                         var requestObj = {
                           url: url,

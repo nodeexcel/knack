@@ -26,7 +26,7 @@ router.post('/', function (req, res) {
                     "PostalCode": req.body.BillingPostalCode
                 },
                 "Notes": req.body.Notes,
-                //"TaxRegistrationNumber":req.body.TaxRegNo,
+               //"taxRegistrationNumber":req.body.TaxRegNo,
                 "PaymentMethodRef":{
                   "name":req.body.PaymentMethod
                 } ,
@@ -52,7 +52,7 @@ router.post('/', function (req, res) {
               getId.getTermId(req,res,req.body.Terms).then((termref)=>{ 
                 data.SalesTermRef=termref;
                 // Set up API call (with OAuth2 accessToken)
-                var url = config.api_uri +  realmId + '/customer'
+                var url = config.api_uri +  realmId + '/customer?minorversion=14'
                 console.log('Making API call to: ' + url )
                 var requestObj = {
                   url: url,
