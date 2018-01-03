@@ -67,7 +67,6 @@ router.get('/revoke', function (req, res) {
         'token': token.accessToken
       })
     }, function (err, response, body) {
-      console.log(err);
       if(err || response.statusCode != 200) {
         return res.json({error: err, statusCode: response.statusCode})
       }
