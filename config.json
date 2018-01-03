@@ -1,7 +1,7 @@
 {
   "clientId": "Q0LU8Ld7WsVmKrpzeww9TgrXcchWGAXuGpsqHIYthNmUINuwaG",
   "clientSecret": "ZBgMELyAP2oJEfXfdksq3a1B5ihVaPqCm8Wk9ImC",
-  "redirectUri": "http://localhost:3000/callback",
+  "redirectUri": "https://boiling-reaches-19259.herokuapp.com/callback",
   "configurationEndpoint": "https://developer.api.intuit.com/.well-known/openid_sandbox_configuration/",
   "api_uri": "https://sandbox-quickbooks.api.intuit.com/v3/company/",
   "scopes": {
