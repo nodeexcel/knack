@@ -6,12 +6,9 @@ var router = express.Router()
 router.get('/', function (req, res) {
 
        tools.refreshTokens().then(function(newToken) {
-         
-            res.json({error:0,message:"token refreshed"}); 
-        }, function(err) {
-          // Error refreshing the tokens
-          res.json({error:1,error:err}); 
-        })
+          
+            res.json({status:true}); 
+        }).catch((err)=>res.json({status:false}))
 })
 
 module.exports = router

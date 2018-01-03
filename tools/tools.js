@@ -92,8 +92,8 @@ var Tools = function () {
          tools.saveToken(newToken).then( () => {
           resolve(newToken);
         })  
-      }).catch((err)=>console.log(err))
-    }).catch((err)=>console.log(err))
+      }).catch((err)=>reject(err))
+    }).catch((err)=>reject(err))
    })
   }
 
