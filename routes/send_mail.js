@@ -2,29 +2,13 @@ var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
 var express = require('express')
 var router = express.Router()
-var multiparty = require("multiparty");
+var multer  = require('multer')
+var upload = multer()
 
-router.post('/',function (req, res) {
-   var form = new multiparty.Form();
-
-    form.on("part", function(part){
-        console.log(part)
-        if(part.filename)
-        {
-            var FormData = require("form-data");
-            var request = require("request")
-            var form = new FormData();
-
-            form.append("thumbnail", part, {filename: part.filename,contentType: part["content-type"]});
-
-            var r = request.post("http://localhost:7070/store", { "headers": {"transfer-encoding": "chunked"} }, function(err, res, body){ 
-                httpResponse.send(res);
-            });
-            
-            r._form = form
-        }
-    })
-
+router.post('/', upload.array(),function (req, res) {
+req.on('data', (data)=>{
+    console.log(data.toString());
+})
 
     // let mailer = nodemailer.createTransport(smtpTransport({
     //     host: req.body.smtp_server,
