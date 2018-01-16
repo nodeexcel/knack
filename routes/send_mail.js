@@ -2,10 +2,8 @@ var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
 var express = require('express')
 var router = express.Router()
-var multer  = require('multer')
-var upload = multer()
 
-router.post('/', upload.array(),function (req, res) {
+router.post('/',function (req, res) {
 req.on('data', (data)=>{
     console.log(data.toString());
 })
