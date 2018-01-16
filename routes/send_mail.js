@@ -5,7 +5,7 @@ var router = express.Router()
 
 router.post('/',function (req, res) {
 req.on('data', (data)=>{
-    console.log(data.toString());
+    console.log(data.toString().toJSON());
 })
 
     // let mailer = nodemailer.createTransport(smtpTransport({
