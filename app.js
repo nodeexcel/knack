@@ -40,7 +40,9 @@ app.use('/addCustomer', require('./routes/addCustomer.js'))
 app.use('/updateCustomer', require('./routes/updateCustomer.js'))  
 app.use('/addSupplier', require('./routes/addSupplier.js'))  
 app.use('/updateSupplier', require('./routes/updateSupplier.js'))  
-app.use('/isAuthenticated', require('./routes/tokenAuthentication.js'))  
+app.use('/isAuthenticated', require('./routes/tokenAuthentication.js'))
+app.use('/salesRecord', require('./routes/salesRecord.js')) 
+app.use('/sendMail', require('./routes/send_mail.js'))  
 // Callback - called via redirect_uri after authorization
 app.use('/callback', require('./routes/callback.js'))
 
