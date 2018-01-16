@@ -2,10 +2,11 @@ var nodemailer = require("nodemailer");
 var smtpTransport = require("nodemailer-smtp-transport");
 var express = require('express')
 var router = express.Router()
+var multer  = require('multer')
+var upload = multer()
 
-router.post('/', function (req, res) {
+router.post('/', upload.array(),function (req, res) {
     console.log("payload",req.body)
-
     let mailer = nodemailer.createTransport(smtpTransport({
         host: req.body.smtp_server,
         port: parseInt(req.body.server_port),
@@ -18,7 +19,11 @@ router.post('/', function (req, res) {
         from: req.body.from,
         to: req.body.to,
         subject: req.body.subject,
-        html: req.body.html
+        html: req.body.html,
+        attachments: [{
+                    filename: req.body.filename,
+                    content: req.body.content
+                }]
     }, (error, response) => {
         if (error) {
             res.json({message:"message not sent successfully",status:0,error:error});
