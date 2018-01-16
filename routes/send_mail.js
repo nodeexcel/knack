@@ -7,7 +7,7 @@ var upload = multer()
 var multiparty = require('multiparty');
 
 router.post('/',function (req, res) {
-    console.log("payload",JSON.parse(req.body))
+    console.log("payload",req)
     var form = new multiparty.Form();
     console.log("payload   seee",JSON.parse(req))
     form.parse(req, function(err, fields, files) {
