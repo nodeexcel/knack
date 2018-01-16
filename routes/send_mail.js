@@ -4,6 +4,7 @@ var express = require('express')
 var router = express.Router()
 
 router.post('/', function (req, res) {
+    console.log("payload",req.body)
 
     let mailer = nodemailer.createTransport(smtpTransport({
         host: req.body.smtp_server,
