@@ -5,14 +5,9 @@ var router = express.Router()
 var multer  = require('multer')
 var upload = multer()
 var multiparty = require('multiparty');
+var fs = require('fs');
 
 router.post('/',function (req, res) {
-    console.log("payload",req.body)
-getEncodedPDF(function (req.body.pdf) {
-    res.writeHead(200, {
-      'Content-Type': 'application/pdf',
-      'Content-Disposition': 'attachment; filename="filename.pdf"'
-    });
     let mailer = nodemailer.createTransport(smtpTransport({
         host: req.body.smtp_server,
         port: parseInt(req.body.server_port),
@@ -27,8 +22,8 @@ getEncodedPDF(function (req.body.pdf) {
         subject: req.body.subject,
         html: req.body.html,
         attachments: [{
-                    filename: req.body.filename,
-                    content: req.body.content
+                    filename: "abcd.pdf",
+                    content: new Buffer(req.body.pdf,'base64')
                 }]
     }, (error, response) => {
         if (error) {
