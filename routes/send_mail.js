@@ -8,7 +8,11 @@ var multiparty = require('multiparty');
 
 router.post('/',function (req, res) {
     console.log("payload",req.body)
-
+getEncodedPDF(function (req.body.pdf) {
+    res.writeHead(200, {
+      'Content-Type': 'application/pdf',
+      'Content-Disposition': 'attachment; filename="filename.pdf"'
+    });
     let mailer = nodemailer.createTransport(smtpTransport({
         host: req.body.smtp_server,
         port: parseInt(req.body.server_port),
