@@ -7,12 +7,7 @@ var upload = multer()
 var multiparty = require('multiparty');
 
 router.post('/',function (req, res) {
-    console.log("payload",req)
-    var form = new multiparty.Form();
-    console.log("payload   seee",JSON.parse(req))
-    form.parse(req, function(err, fields, files) {
-        console.log(fields, files,"===================")
-    });
+    console.log("payload",req.body)
 
     let mailer = nodemailer.createTransport(smtpTransport({
         host: req.body.smtp_server,
