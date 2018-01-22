@@ -22,7 +22,7 @@ router.post('/',function (req, res) {
         subject: req.body.subject,
         html: req.body.html,
         attachments: [{
-                    filename: "abcd.pdf",
+                    filename: req.body.filename,
                     content: new Buffer(req.body.pdf,'base64')
                 }]
     }, (error, response) => {
