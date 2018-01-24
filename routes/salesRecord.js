@@ -5,7 +5,6 @@ var request = require('request')
 var express = require('express')
 var router = express.Router()
 
-console.log(body)
 router.post('/', function(req, res) {
     let token;
 
