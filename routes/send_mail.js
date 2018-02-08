@@ -8,6 +8,8 @@ var multiparty = require('multiparty');
 var fs = require('fs');
 
 router.post('/', function(req, res) {
+    getAttachments(req.body, function(response) {})
+
     let attachments = []
     if (req.body.filename) {
         let attachment = {
@@ -38,6 +40,10 @@ router.post('/', function(req, res) {
         }
         mailer.close();
     });
+
+    function getAttachments(body, callback) {
+        console.log(body, "bodyyyyyyyyyyyyyyyyyy")
+    }
 })
 
 module.exports = router
