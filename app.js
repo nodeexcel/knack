@@ -9,11 +9,11 @@ var bodyParser = require('body-parser');
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(session({secret: 'secret', resave: 'false', saveUninitialized: 'false'}))
+app.use(session({ secret: 'secret', resave: 'false', saveUninitialized: 'false' }))
 app.use(cors());
 // Initial view - loads Connect To QuickBooks Button
-app.get('/', function (req, res) {
-  res.render('home', config)
+app.get('/', function(req, res) {
+    res.render('home', config)
 })
 app.use(bodyParser.urlencoded({
     extended: true
@@ -29,20 +29,22 @@ app.use('/connect_to_quickbooks', require('./routes/connect_to_quickbooks.js'))
 app.use('/connect_handler', require('./routes/connect_handler.js'))
 
 app.use('/inventory', require('./routes/inventory.js'))
-app.use('/updateInventory', require('./routes/updateInventory.js'))  
-app.use('/getInventory', require('./routes/getInventory.js'))  
-app.use('/expenseAccountRef', require('./routes/expenseAccountRef.js'))  
-app.use('/incomeAccountRef', require('./routes/incomeAccountRef.js'))  
-app.use('/assetAccountRef', require('./routes/assetAccountRef.js'))  
+app.use('/updateInventory', require('./routes/updateInventory.js'))
+app.use('/getInventory', require('./routes/getInventory.js'))
+app.use('/expenseAccountRef', require('./routes/expenseAccountRef.js'))
+app.use('/incomeAccountRef', require('./routes/incomeAccountRef.js'))
+app.use('/assetAccountRef', require('./routes/assetAccountRef.js'))
 app.use('/purchaseTaxCodeRef', require('./routes/purchaseTaxCodeRef.js'))
-app.use('/updateInventoryQuantityAdjustment', require('./routes/updateInventoryQuantityAdjustment.js'))  
-app.use('/addCustomer', require('./routes/addCustomer.js')) 
-app.use('/updateCustomer', require('./routes/updateCustomer.js'))  
-app.use('/addSupplier', require('./routes/addSupplier.js'))  
-app.use('/updateSupplier', require('./routes/updateSupplier.js'))  
+app.use('/updateInventoryQuantityAdjustment', require('./routes/updateInventoryQuantityAdjustment.js'))
+app.use('/addCustomer', require('./routes/addCustomer.js'))
+app.use('/updateCustomer', require('./routes/updateCustomer.js'))
+app.use('/addSupplier', require('./routes/addSupplier.js'))
+app.use('/updateSupplier', require('./routes/updateSupplier.js'))
 app.use('/isAuthenticated', require('./routes/tokenAuthentication.js'))
-app.use('/salesRecord', require('./routes/salesRecord.js')) 
-app.use('/sendMail', require('./routes/send_mail.js'))  
+app.use('/salesRecord', require('./routes/salesRecord.js'))
+app.use('/sendMail', require('./routes/send_mail.js'))
+app.use('/mailMultipleAttach', require('./routes/mail_multi_attach.js'))
+
 // Callback - called via redirect_uri after authorization
 app.use('/callback', require('./routes/callback.js'))
 
@@ -54,6 +56,6 @@ app.use('/api_call', require('./routes/api_call.js'))
 
 
 // Start server on HTTP (will use ngrok for HTTPS forwarding)
-app.listen(process.env.PORT || 3000, function () {
-  console.log('Example app listening on port',process.env.PORT || 3000)
+app.listen(process.env.PORT || 3000, function() {
+    console.log('Example app listening on port', process.env.PORT || 3000)
 })
