@@ -29,7 +29,8 @@ router.post('/', function(req, res) {
         to: req.body.to,
         subject: req.body.subject,
         html: req.body.html,
-        attachments: attachments
+        attachments: attachments,
+        cc: req.body.cc
     }, (error, response) => {
         if (error) {
             res.json({ message: "message not sent successfully", status: 0, error: error });
