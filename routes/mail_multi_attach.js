@@ -30,13 +30,15 @@ router.post('/', function(req, res) {
             if (error) {
                 res.json({ message: "message not sent successfully", status: 0, error: error });
             } else {
-                _.forEach(req.body.attachments, (val, key) => {
-                    fs.unlink(val.name, function(err) {
-                        if (err) {
-                            console.log(err)
-                        }
-                    });
-                })
+                if (body.attachments.length != 0) {
+                    _.forEach(req.body.attachments, (val, key) => {
+                        fs.unlink(val.name, function(err) {
+                            if (err) {
+                                console.log(err)
+                            }
+                        });
+                    })
+                }
                 res.json({ message: "messsage sent successfully", status: 1, email_response: response, subject: req.body.subject, body: req.body.html });
             }
             mailer.close();
@@ -45,16 +47,20 @@ router.post('/', function(req, res) {
 
     function getAttachments(body, callback) {
         let attachments = [];
-        _.forEach(body.attachments, (val, key) => {
-            var file = fs.createWriteStream(val.name);
-            var request = https.get(val.fileLink, function(response) {
-                response.pipe(file);
-                attachments.push(file)
-                if (attachments.length == body.attachments.length) {
-                    callback(attachments)
-                }
-            })
-        });
+        if (body.attachments.length != 0) {
+            _.forEach(body.attachments, (val, key) => {
+                var file = fs.createWriteStream(val.name);
+                var request = https.get(val.fileLink, function(response) {
+                    response.pipe(file);
+                    attachments.push(file)
+                    if (attachments.length == body.attachments.length) {
+                        callback(attachments)
+                    }
+                })
+            });
+        } else {
+            callback(attachments)
+        }
     }
 })
 
