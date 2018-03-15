@@ -10,6 +10,7 @@ var fs = require('fs');
 var _ = require('lodash')
 
 router.post('/', function(req, res) {
+    console.log(req.body)
     getAttachments(req.body, function(attach) {
         let mailer = nodemailer.createTransport(smtpTransport({
             host: req.body.smtp_server,
@@ -30,7 +31,7 @@ router.post('/', function(req, res) {
             if (error) {
                 res.json({ message: "message not sent successfully", status: 0, error: error });
             } else {
-                if (body.attachments.length != 0) {
+                if (req.body.attachments.length != 0) {
                     _.forEach(req.body.attachments, (val, key) => {
                         fs.unlink(val.name, function(err) {
                             if (err) {
