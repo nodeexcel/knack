@@ -10,7 +10,6 @@ var fs = require('fs');
 var _ = require('lodash')
 
 router.post('/', function(req, res) {
-    console.log(req.body)
     getAttachments(req.body, function(attach) {
         let mailer = nodemailer.createTransport(smtpTransport({
             host: req.body.smtp_server,
