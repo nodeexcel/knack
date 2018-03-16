@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var conn = mongoose.connect('mongodb://ashutosh_m:java123@ds139138.mlab.com:39138/knack');
+var conn = mongoose.createConnection('mongodb://localhost/knack');
 var session = mongoose.Schema({}, {
     collection: 'session',
     strict: false
