@@ -65,9 +65,9 @@ app.use('/api_call', require('./routes/api_call.js'))
 // Start server on HTTP (will use ngrok for HTTPS forwarding)
 let server = https.createServer(credentials, app)
 let httpServer = http.createServer(app);
-httpServer.listen(9000, function() {
-    console.log("Http is listening on port", 9000)
+httpServer.listen(3000, function() {
+    console.log("Http is listening on port", 3000)
 })
-server.listen(process.env.PORT || 3000, function() {
-    console.log('Example app listening on port', process.env.PORT || 3000)
+server.listen(process.env.PORT || 9000, function() {
+    console.log('Example app listening on port', process.env.PORT || 9000)
 })
