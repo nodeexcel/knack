@@ -3,9 +3,15 @@ var config = require('./config.json')
 var express = require('express')
 var session = require('express-session')
 var app = express()
-var cors = require('cors');
+var cors = require('cors')
 var bodyParser = require('body-parser');
+var https = require('https');
+var fs = require('fs');
 //var routes = require('./routes/auth.js')(app)
+var privateKey = fs.readFileSync('./s166-62-92-227.secureserver.net.key', 'utf8');
+var certificate = fs.readFileSync('./s166-62-92-227.secureserver.net.crt', 'utf8');
+
+var credentials = { key: privateKey, cert: certificate };
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
@@ -56,6 +62,7 @@ app.use('/api_call', require('./routes/api_call.js'))
 
 
 // Start server on HTTP (will use ngrok for HTTPS forwarding)
+let server = https.createServer(credentials, app)
 app.listen(process.env.PORT || 3000, function() {
     console.log('Example app listening on port', process.env.PORT || 3000)
 })
