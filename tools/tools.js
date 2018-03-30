@@ -291,12 +291,10 @@ var Tools = function() {
     }
     this.fetchSupplierId = function(KnackId) {
         return new Promise((resolve, reject) => {
-            console.log(KnackId, "==========================")
             db.storedSupplierIds.findOne({ knackId: KnackId }).exec((err, data) => {
                 if (err) {
                     reject(err)
                 } else {
-                    console.log(data)
                     if (data) {
                         data = JSON.parse(JSON.stringify(data));
                         resolve(data.quickbookId);
