@@ -263,6 +263,7 @@ var Tools = function() {
                 if (err) {
                     reject(err)
                 } else {
+                    console.log(data)
                     if (data) {
                         data = JSON.parse(JSON.stringify(data));
                         resolve(data.quickbookId);
