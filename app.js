@@ -9,10 +9,10 @@ var https = require('https');
 var fs = require('fs');
 var http = require('http');
 //var routes = require('./routes/auth.js')(app)
-// var privateKey = fs.readFileSync('./s166-62-92-227.secureserver.net.key', 'utf8');
-// var certificate = fs.readFileSync('./s166-62-92-227.secureserver.net.crt', 'utf8');
+var privateKey = fs.readFileSync('./s166-62-92-227.secureserver.net.key', 'utf8');
+var certificate = fs.readFileSync('./s166-62-92-227.secureserver.net.crt', 'utf8');
 
-// var credentials = { key: privateKey, cert: certificate };
+var credentials = { key: privateKey, cert: certificate };
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
@@ -63,11 +63,11 @@ app.use('/api_call', require('./routes/api_call.js'))
 
 
 // Start server on HTTP (will use ngrok for HTTPS forwarding)
-// let server = https.createServer(credentials, app)
+let server = https.createServer(credentials, app)
 let httpServer = http.createServer(app);
 httpServer.listen(3000, function() {
     console.log("Http is listening on port", 3000)
 })
-// server.listen(process.env.PORT || 9000, function() {
-//     console.log('Example app listening on port', process.env.PORT || 9000)
-// })
+server.listen(process.env.PORT || 9000, function() {
+    console.log('Example app listening on port', process.env.PORT || 9000)
+})
