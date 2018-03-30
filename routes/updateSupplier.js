@@ -18,6 +18,7 @@ router.post('/', function(req, res) {
                 error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
             })
             // Set up API call (with OAuth2 accessToken)
+            console.log(req.body)
             tools.fetchSupplierId(req.body.KnackID).then((supplierId) => {
                 var query = `select * from Vendor where Id = '` + supplierId + `'`;
                 var url = config.api_uri + realmId + '/query?query=' + query;
