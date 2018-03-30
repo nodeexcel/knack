@@ -19,44 +19,43 @@ router.post('/', function(req, res) {
             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                 var inventory = req.body.inventory;
                 var line = []
-                console.log(inventory)
                 findInventory(inventory, function(response_item) {
                     getId.ItemId(req, res, req.body.SKU).then((itemref) => {
                         // getId.getTermId(req, res, req.body.Terms).then((termref) => {
-                            // Set up API call (with OAuth2 accessToken)
+                        // Set up API call (with OAuth2 accessToken)
 
-                            var url = config.api_uri + realmId + '/invoice?minorversion=14'
-                            console.log('Making API call to: ' + url)
-                            data = {
-                                "Line": response_item,
+                        var url = config.api_uri + realmId + '/invoice?minorversion=14'
+                        console.log('Making API call to: ' + url)
+                        data = {
+                            "Line": response_item,
 
-                                "CustomerRef": {
-                                    "value": customerref.value
-                                }
+                            "CustomerRef": {
+                                "value": customerref.value
                             }
-                            var requestObj = {
-                                url: url,
-                                method: "POST",
-                                json: data,
-                                headers: {
-                                    'Authorization': 'Bearer ' + token.accessToken
-                                }
+                        }
+                        var requestObj = {
+                            url: url,
+                            method: "POST",
+                            json: data,
+                            headers: {
+                                'Authorization': 'Bearer ' + token.accessToken
                             }
+                        }
 
-                            // Make API call
-                            request(requestObj, function(err, response) {
-                                // Check if 401 response was returned - refresh tokens if so!
-                                tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
-                                    if (err || response.statusCode != 200) {
-                                        return res.json({ error: err, statusCode: response.statusCode, response: response.body })
-                                    }
-                                    // API Call was a success!
-                                    //tools.saveCustomerId(req.body.KnackID,response.body.Customer.Id)
-                                    res.json(response.body)
-                                }, function(err) {
-                                    return res.json(err)
-                                })
+                        // Make API call
+                        request(requestObj, function(err, response) {
+                            // Check if 401 response was returned - refresh tokens if so!
+                            tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
+                                if (err || response.statusCode != 200) {
+                                    return res.json({ error: err, statusCode: response.statusCode, response: response.body })
+                                }
+                                // API Call was a success!
+                                //tools.saveCustomerId(req.body.KnackID,response.body.Customer.Id)
+                                res.json(response.body)
+                            }, function(err) {
+                                return res.json(err)
                             })
+                        })
                         // }).catch(err => console.log(err))
                     }).catch(err => console.log(err))
                 })
@@ -75,10 +74,10 @@ router.post('/', function(req, res) {
                                 "Qty": sku.field_286_raw
                             }
                         })
-                        if(inventory.length){
-                          findInventory(inventory, callback)
-                        }else{
-                          callback(line)
+                        if (inventory.length) {
+                            findInventory(inventory, callback)
+                        } else {
+                            callback(line)
                         }
                     })
                 }
