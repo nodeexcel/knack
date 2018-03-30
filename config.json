@@ -1,7 +1,7 @@
 {
-    "clientId": "Q0bzUUp2p35TAAuPfiVDnqX1SFB6pU4qP005j6grCw1SfI7zuC",
-    "clientSecret": "QtuyP8RqSXqknDGwNbyPVrl7NVCWOMUwJqiAbU58",
-    "redirectUri": "https://api.csc-led.com:3000/callback",
+    "clientId": "Q0LU8Ld7WsVmKrpzeww9TgrXcchWGAXuGpsqHIYthNmUINuwaG",
+    "clientSecret": "ZBgMELyAP2oJEfXfdksq3a1B5ihVaPqCm8Wk9ImC",
+    "redirectUri": "https://boiling-reaches-19259.herokuapp.com/callback",
     "configurationEndpoint": "https://developer.api.intuit.com/.well-known/openid_sandbox_configuration/",
     "api_uri": "https://sandbox-quickbooks.api.intuit.com/v3/company/",
     "scopes":
