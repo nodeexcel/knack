@@ -263,7 +263,6 @@ var Tools = function() {
                 if (err) {
                     reject(err)
                 } else {
-                    console.log(data)
                     if (data) {
                         data = JSON.parse(JSON.stringify(data));
                         resolve(data.quickbookId);
@@ -296,7 +295,8 @@ var Tools = function() {
                 if (err) {
                     reject(err)
                 } else {
-                    if (data) {
+                    console.log(data)
+                    if (data._id) {
                         data = JSON.parse(JSON.stringify(data));
                         resolve(data.quickbookId);
                     } else {
