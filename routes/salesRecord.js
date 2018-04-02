@@ -27,8 +27,6 @@ router.post('/', function(req, res) {
                         var url = config.api_uri + realmId + '/invoice?minorversion=14'
                         console.log('Making API call to: ' + url)
                         data = {
-                            "sparse": false,
-                            "Id": Math.floor(Math.random() * 90000) + 10000,
                             "Line": response_item,
                             "DueDate": moment(req.body.DueDate).format('YYYY-MM-DD'),
                             "CustomerRef": {
