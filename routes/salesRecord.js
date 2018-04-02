@@ -4,7 +4,7 @@ var config = require('../config.json')
 var request = require('request')
 var express = require('express')
 var router = express.Router()
-
+var moment = require('moment')
 router.post('/', function(req, res) {
     let token;
 
@@ -28,7 +28,7 @@ router.post('/', function(req, res) {
                         console.log('Making API call to: ' + url)
                         data = {
                             "Line": response_item,
-                            "DueDate": req.body.DueDate,
+                            "DueDate": moment(req.body.DueDate).format('YYYY-MM-DD'),
                             "CustomerRef": {
                                 "value": customerref.value
                             }
