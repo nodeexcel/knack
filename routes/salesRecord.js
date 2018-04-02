@@ -28,7 +28,8 @@ router.post('/', function(req, res) {
                         console.log('Making API call to: ' + url)
                         data = {
                             "Line": response_item,
-
+                            "Id": req.body.Id,
+                            "DueDate": req.body.DueDate,
                             "CustomerRef": {
                                 "value": customerref.value
                             }
