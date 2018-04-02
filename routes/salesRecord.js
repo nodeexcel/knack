@@ -64,6 +64,7 @@ router.post('/', function(req, res) {
                     let sku = inventory.splice(0, 1)[0]
                     console.log(sku.field_281_raw[0])
                     getId.ItemId(req, res, sku.field_281_raw[0].identifier).then((itemref) => {
+                        console.log(itemref, "=====================")
                         line.push({
                             "Amount": sku.field_287_raw,
                             "DetailType": "SalesItemLineDetail",
