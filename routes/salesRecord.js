@@ -32,7 +32,7 @@ router.post('/', function(req, res) {
                             "CustomerRef": {
                                 "value": customerref.value
                             },
-                            'DocNumber': Math.floor(Math.random() * 90000) + 10000
+                            'DocNumber': req.body.DocNumber
                         }
                         var requestObj = {
                             url: url,
