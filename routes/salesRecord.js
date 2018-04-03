@@ -32,7 +32,10 @@ router.post('/', function(req, res) {
                             "CustomerRef": {
                                 "value": customerref.value
                             },
-                            'DocNumber': req.body.DocNumber
+                            'DocNumber': req.body.DocNumber,
+                            'ShipAddr': req.body.ShipAddr,
+                            'ShipMethodRef': req.body.ShipMethodRef,
+                            'PaymentMethod': req.body.PaymentMethod
                         }
                         var requestObj = {
                             url: url,
@@ -65,7 +68,6 @@ router.post('/', function(req, res) {
                     let sku = inventory.splice(0, 1)[0]
                     console.log(sku.field_281_raw[0])
                     getId.ItemId(req, res, sku.field_281_raw[0].identifier).then((itemref) => {
-                        console.log(itemref, "=====================")
                         line.push({
                             "Amount": sku.field_287_raw,
                             "DetailType": "SalesItemLineDetail",
