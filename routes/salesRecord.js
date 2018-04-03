@@ -34,8 +34,7 @@ router.post('/', function(req, res) {
                             },
                             'DocNumber': req.body.DocNumber,
                             'ShipAddr': req.body.ShipAddr,
-                            'ShipMethodRef': req.body.ShipMethodRef,
-                            'PaymentMethod': req.body.PaymentMethod
+                            'ShipMethodRef': req.body.ShipMethodRef
                         }
                         var requestObj = {
                             url: url,
