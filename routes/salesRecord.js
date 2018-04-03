@@ -82,7 +82,7 @@ router.post('/', function(req, res) {
                                     "value": "TAX"
                                 },
                                 "Qty": sku.field_286_raw,
-                                "UnitPrice": sku.filed_285_raw
+                                "UnitPrice": sku.field_285_raw
                             }
                         })
                         if (inventory.length) {
