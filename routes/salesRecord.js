@@ -81,7 +81,8 @@ router.post('/', function(req, res) {
                                 "TaxCodeRef": {
                                     "value": "TAX"
                                 },
-                                "Qty": sku.field_286_raw
+                                "Qty": sku.field_286_raw,
+                                "UnitPrice": sku.filed_285_raw
                             }
                         })
                         if (inventory.length) {
