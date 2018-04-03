@@ -36,7 +36,8 @@ router.post('/', function(req, res) {
                             'ShipAddr': req.body.ShipAddr,
                             'ShipMethodRef': req.body.ShipMethodRef,
                             'TotalAmt': req.body.TotalAmt,
-                            'ShipDate': moment(req.body.ShipDate).format('YYYY-MM-DD')
+                            'ShipDate': moment(req.body.ShipDate).format('YYYY-MM-DD'),
+                            'TrackingNum': req.body.TrackingNum
                         }
                         var requestObj = {
                             url: url,
