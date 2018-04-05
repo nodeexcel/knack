@@ -23,48 +23,53 @@ router.post('/', function(req, res) {
                     getId.ItemId(req, res, req.body.SKU).then((itemref) => {
                         // getId.getTermId(req, res, req.body.Terms).then((termref) => {
                         // Set up API call (with OAuth2 accessToken)
-
-                        var url = config.api_uri + realmId + '/invoice?minorversion=14'
-                        console.log('Making API call to: ' + url)
-                        data = {
-                            "Line": response_item,
-                            "DueDate": moment(req.body.DueDate).format('YYYY-MM-DD'),
-                            "CustomerRef": {
-                                "value": customerref.value
-                            },
-                            'DocNumber': req.body.DocNumber,
-                            'ShipAddr': req.body.ShipAddr,
-                            'ShipMethodRef': req.body.ShipMethodRef,
-                            'TotalAmt': req.body.TotalAmt,
-                            'ShipDate': moment(req.body.ShipDate).format('YYYY-MM-DD'),
-                            'TrackingNum': req.body.TrackingNum,
-                            'CustomField': req.body.CustomField
-                        }
-                        var requestObj = {
-                            url: url,
-                            method: "POST",
-                            json: data,
-                            headers: {
-                                'Authorization': 'Bearer ' + token.accessToken
+                        getId.getTermId(req, res, req.body.SalesTermRef).then((terms_data) => {
+                            var url = config.api_uri + realmId + '/invoice?minorversion=14'
+                            console.log('Making API call to: ' + url)
+                            data = {
+                                "Line": response_item,
+                                "DueDate": moment(req.body.DueDate).format('YYYY-MM-DD'),
+                                "CustomerRef": {
+                                    "value": customerref.value
+                                },
+                                'DocNumber': req.body.DocNumber,
+                                'ShipAddr': req.body.ShipAddr,
+                                'ShipMethodRef': req.body.ShipMethodRef,
+                                'TotalAmt': req.body.TotalAmt,
+                                'ShipDate': moment(req.body.ShipDate).format('YYYY-MM-DD'),
+                                'TrackingNum': req.body.TrackingNum,
+                                'CustomField': req.body.CustomField,
+                                "SalesTermRef": {
+                                    "value": terms_data.value
+                                },
+                                "CustomerMemo": req.body.CustomerMemo
                             }
-                        }
-
-                        // Make API call
-                        request(requestObj, function(err, response) {
-                            // Check if 401 response was returned - refresh tokens if so!
-                            tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
-                                if (err || response.statusCode != 200) {
-                                    return res.json({ error: err, statusCode: response.statusCode, response: response.body })
+                            var requestObj = {
+                                url: url,
+                                method: "POST",
+                                json: data,
+                                headers: {
+                                    'Authorization': 'Bearer ' + token.accessToken
                                 }
-                                // API Call was a success!
-                                //tools.saveCustomerId(req.body.KnackID,response.body.Customer.Id)
-                                res.json(response.body)
-                            }, function(err) {
-                                return res.json(err)
+                            }
+
+                            // Make API call
+                            request(requestObj, function(err, response) {
+                                // Check if 401 response was returned - refresh tokens if so!
+                                tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
+                                    if (err || response.statusCode != 200) {
+                                        return res.json({ error: err, statusCode: response.statusCode, response: response.body })
+                                    }
+                                    // API Call was a success!
+                                    //tools.saveCustomerId(req.body.KnackID,response.body.Customer.Id)
+                                    res.json(response.body)
+                                }, function(err) {
+                                    return res.json(err)
+                                })
                             })
-                        })
-                        // }).catch(err => console.log(err))
-                    }).catch(err => console.log(err))
+                            // }).catch(err => console.log(err))
+                        }).catch(err => console.log(err))
+                    })
                 })
 
                 function findInventory(inventory, callback) {
