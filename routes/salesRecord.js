@@ -89,9 +89,9 @@ router.post('/', function(req, res) {
                                     "value": "TAX"
                                 },
                                 "Qty": sku.field_286_raw,
-                                "UnitPrice": sku.field_285_raw,
-                                "Description": sku.field_339
-                            }
+                                "UnitPrice": sku.field_285_raw
+                            },
+                            "Description": sku.field_339
                         })
                         if (inventory.length) {
                             findInventory(inventory, callback)
