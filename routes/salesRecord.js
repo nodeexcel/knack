@@ -37,7 +37,8 @@ router.post('/', function(req, res) {
                             'ShipMethodRef': req.body.ShipMethodRef,
                             'TotalAmt': req.body.TotalAmt,
                             'ShipDate': moment(req.body.ShipDate).format('YYYY-MM-DD'),
-                            'TrackingNum': req.body.TrackingNum
+                            'TrackingNum': req.body.TrackingNum,
+                            'CustomField': req.body.CustomField
                         }
                         var requestObj = {
                             url: url,
@@ -79,7 +80,7 @@ router.post('/', function(req, res) {
                                     "name": itemref.name
                                 },
                                 "TaxCodeRef": {
-                                    "value": "5"
+                                    "value": "TAX"
                                 },
                                 "Qty": sku.field_286_raw,
                                 "UnitPrice": sku.field_285_raw
