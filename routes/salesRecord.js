@@ -24,6 +24,7 @@ router.post('/', function(req, res) {
                         // getId.getTermId(req, res, req.body.Terms).then((termref) => {
                         // Set up API call (with OAuth2 accessToken)
                         getId.getTermId(req, res, req.body.SalesTermRef).then((terms_data) => {
+                            console.log(terms_data, "==================")
                             var url = config.api_uri + realmId + '/invoice?minorversion=14'
                             console.log('Making API call to: ' + url)
                             data = {
