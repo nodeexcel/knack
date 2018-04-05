@@ -43,7 +43,7 @@ router.post('/', function(req, res) {
                                 "SalesTermRef": {
                                     "value": terms_data.value
                                 },
-                                "CustomerMemo": req.body.CustomerMemo
+                                "CustomerMemo": { value: req.body.CustomerMemo }
                             }
                             var requestObj = {
                                 url: url,
