@@ -45,7 +45,15 @@ router.post('/', function(req, res) {
                 },
                 "PrimaryEmailAddr": {
                     "Address": req.body.BillingEmail
-                }
+                },
+                "Mobile": {
+                    "FreeFormNumber": req.body.Contacts
+                },
+                "WebAddr": {
+                    "URI": req.body.WebAddr
+                },
+                "ShipAddr": req.body.ShipAddr,
+                "GivenName": req.body.GivenName
             };
             getId.getPaymentMethodId(req, res, req.body.PaymentMethod).then((paymentMethodref) => {
                 data.PaymentMethodRef = paymentMethodref;
