@@ -64,14 +64,15 @@ var account = function() {
             tools.getRelmId().then((realmId) => {
                 tools.getToken().then((fetchedToken) => {
                     token = fetchedToken;
+                    console.log(token, "token")
                     if (!token) return res.json({ error: 'Not authorized' })
                     if (!realmId) return res.json({
                         error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
                     })
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from Term  where Name = '` + name + `'`;
-                    var url = config.api_uri + realmId + '/query?query=' + query;
-                    console.log('Making API call to: ' + encodeURI(url))
+                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
+                    console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
                         method: "GET",
@@ -91,7 +92,6 @@ var account = function() {
                             }
                             // API Call was a success!
                             var pars = (JSON.parse(response.body))
-                            console.log(pars)
                             if (pars.QueryResponse.Term) {
                                 resolve({ "value": pars.QueryResponse.Term[0].Id, "name": pars.QueryResponse.Term[0].Name })
                             } else {
