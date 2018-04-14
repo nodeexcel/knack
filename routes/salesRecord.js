@@ -27,10 +27,11 @@ router.post('/', function(req, res) {
                             console.log(terms_data, "==================")
                             var url = config.api_uri + realmId + '/invoice?minorversion=14'
                             console.log('Making API call to: ' + url)
-                            console.log(moment(new Date(req.body.DueDate)).format('YYYY-MM-DD'), "date")
+                            console.log(req.body.DueDate)
+                            console.log(moment(new Date(Date.parse(req.body.DueDate))).format('YYYY-MM-DD'), "date")
                             data = {
                                 "Line": response_item,
-                                "DueDate": moment(req.body.DueDate).format('YYYY-MM-DD'),
+                                "DueDate": moment(new Date(Date.parse(req.body.DueDate))).format('YYYY-MM-DD'),
                                 "CustomerRef": {
                                     "value": customerref.value
                                 },
@@ -38,7 +39,7 @@ router.post('/', function(req, res) {
                                 'ShipAddr': req.body.ShipAddr,
                                 'ShipMethodRef': req.body.ShipMethodRef,
                                 'TotalAmt': req.body.TotalAmt,
-                                'ShipDate': moment(new Date(req.body.ShipDate)).format('YYYY-MM-DD'),
+                                'ShipDate': moment(new Date(Date.parse(req.body.ShipDate))).format('YYYY-MM-DD'),
                                 'TrackingNum': req.body.TrackingNum,
                                 'CustomField': req.body.CustomField,
                                 "SalesTermRef": {
