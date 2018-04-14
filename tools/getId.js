@@ -21,7 +21,7 @@ var account = function() {
                     })
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from Account  where Name = '` + name + `'`;
-                    var url = config.api_uri + realmId + '/query?query=' + query;
+                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
@@ -120,7 +120,7 @@ var account = function() {
                     })
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from PaymentMethod  where Name = '` + name + `'`;
-                    var url = config.api_uri + realmId + '/query?query=' + query;
+                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
@@ -233,7 +233,7 @@ var account = function() {
                     })
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from customer  where DisplayName = '` + name + `'`;
-                    var url = config.api_uri + realmId + '/query?query=' + query;
+                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
@@ -282,7 +282,7 @@ var account = function() {
                     })
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from item  where SKU = '` + name + `'`;
-                    var url = config.api_uri + realmId + '/query?query=' + query;
+                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
