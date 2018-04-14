@@ -6,6 +6,7 @@ var multer = require('multer')
 var upload = multer()
 var multiparty = require('multiparty');
 var fs = require('fs');
+var config = require('../config.json');
 
 router.post('/', function(req, res) {
     let attachments = []
@@ -17,11 +18,11 @@ router.post('/', function(req, res) {
         attachments.push(attachment)
     }
     let mailer = nodemailer.createTransport(smtpTransport({
-        host: req.body.smtp_server,
-        port: parseInt(req.body.server_port),
+        host: 'smtp.sendgrid.net',
+        port: 465,
         auth: {
-            user: req.body.username,
-            pass: req.body.password
+            user: 'apikey',
+            pass: config.sendgrid_token
         }
     }));
     mailer.sendMail({

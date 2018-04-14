@@ -4,8 +4,8 @@
     "redirectUri": "https://api.csc-led.com:3000/callback",
     "configurationEndpoint": "https://developer.api.intuit.com/.well-known/openid_sandbox_configuration/",
     "api_uri": "https://sandbox-quickbooks.api.intuit.com/v3/company/",
-    "scopes":
-    {
+    "sendgrid_token": "",
+    "scopes": {
         "sign_in_with_intuit": [
             "openid",
             "profile",

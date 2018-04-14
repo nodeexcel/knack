@@ -8,15 +8,16 @@ var multiparty = require('multiparty');
 var https = require('https');
 var fs = require('fs');
 var _ = require('lodash')
+var config = require('../config.json');
 
 router.post('/', function(req, res) {
     getAttachments(req.body, function(attach) {
         let mailer = nodemailer.createTransport(smtpTransport({
-            host: req.body.smtp_server,
-            port: parseInt(req.body.server_port),
+            host: 'smtp.sendgrid.net',
+            port: 465,
             auth: {
-                user: req.body.username,
-                pass: req.body.password
+                user: 'apikey',
+                pass: config.sendgrid_token
             }
         }));
         mailer.sendMail({
