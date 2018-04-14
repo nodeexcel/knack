@@ -29,7 +29,7 @@ router.post('/', function(req, res) {
                             console.log('Making API call to: ' + url)
                             data = {
                                 "Line": response_item,
-                                "DueDate": moment(req.body.DueDate).format('YYYY-MM-DD'),
+                                "DueDate": moment(req.body.DueDate, 'YYYY-MM-DD'),
                                 "CustomerRef": {
                                     "value": customerref.value
                                 },
@@ -37,7 +37,7 @@ router.post('/', function(req, res) {
                                 'ShipAddr': req.body.ShipAddr,
                                 'ShipMethodRef': req.body.ShipMethodRef,
                                 'TotalAmt': req.body.TotalAmt,
-                                'ShipDate': moment(req.body.ShipDate).format('YYYY-MM-DD'),
+                                'ShipDate': moment(req.body.ShipDate, 'YYYY-MM-DD'),
                                 'TrackingNum': req.body.TrackingNum,
                                 'CustomField': req.body.CustomField,
                                 "SalesTermRef": {
