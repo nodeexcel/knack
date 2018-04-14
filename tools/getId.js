@@ -84,7 +84,6 @@ var account = function() {
 
                     // Make API call
                     request(requestObj, function(err, response) {
-                        console.log(err, response)
                         // Check if 401 response was returned - refresh tokens if so!
                         tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                             if (err || response.statusCode != 200) {
@@ -92,6 +91,7 @@ var account = function() {
                             }
                             // API Call was a success!
                             var pars = (JSON.parse(response.body))
+                            console.log(pars)
                             if (pars.QueryResponse.Term) {
                                 resolve({ "value": pars.QueryResponse.Term[0].Id, "name": pars.QueryResponse.Term[0].Name })
                             } else {
