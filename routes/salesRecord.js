@@ -28,10 +28,14 @@ router.post('/', function(req, res) {
                             var url = config.api_uri + realmId + '/invoice?minorversion=14'
                             console.log('Making API call to: ' + url)
                             console.log(req.body.DueDate)
-                            console.log(moment(new Date(Date.parse(req.body.DueDate))).format('YYYY-MM-DD'), "date")
+                            let date = req.body.DueDate.split('/')
+                            req.body.DueDate = date[2] + '/' + date[1] + '/' + date[0];
+                            date = req.body.ShipDate.split('/')
+                            req.body.ShipDate = date[2] + '/' + date[1] + '/' + date[0]
+                            console.log(moment(req.body.ShipDate).format('YYYY-MM-DD'), "date")
                             data = {
                                 "Line": response_item,
-                                "DueDate": moment(new Date(Date.parse(req.body.DueDate))).format('YYYY-MM-DD'),
+                                "DueDate": moment(req.body.DueDate).format('YYYY-MM-DD'),
                                 "CustomerRef": {
                                     "value": customerref.value
                                 },
@@ -39,7 +43,7 @@ router.post('/', function(req, res) {
                                 'ShipAddr': req.body.ShipAddr,
                                 'ShipMethodRef': req.body.ShipMethodRef,
                                 'TotalAmt': req.body.TotalAmt,
-                                'ShipDate': moment(new Date(Date.parse(req.body.ShipDate))).format('YYYY-MM-DD'),
+                                'ShipDate': moment(req.body.ShipDate).format('YYYY-MM-DD'),
                                 'TrackingNum': req.body.TrackingNum,
                                 'CustomField': req.body.CustomField,
                                 "SalesTermRef": {
