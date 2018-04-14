@@ -16,7 +16,7 @@ var credentials = { key: privateKey, cert: certificate };
 app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(session({ secret: 'secret', resave: 'false', saveUninitialized: 'false' }))
+app.use(session({ secret: 'secret', resave: 'true', saveUninitialized: 'true' }))
 app.use(cors());
 // Initial view - loads Connect To QuickBooks Button
 app.get('/', function(req, res) {
