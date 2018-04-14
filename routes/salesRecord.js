@@ -87,7 +87,7 @@ router.post('/', function(req, res) {
                                     "name": itemref.name
                                 },
                                 "TaxCodeRef": {
-                                    "value": "5"
+                                    "value": "2"
                                 },
                                 "Qty": sku.field_286_raw,
                                 "UnitPrice": sku.field_285_raw
