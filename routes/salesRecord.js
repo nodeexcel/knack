@@ -45,6 +45,7 @@ router.post('/', function(req, res) {
                                 },
                                 "CustomerMemo": { value: req.body.CustomerMemo }
                             }
+                            console.log(data, "++++++++++++++++++++")
                             var requestObj = {
                                 url: url,
                                 method: "POST",
