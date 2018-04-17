@@ -98,9 +98,10 @@ router.post('/', function(req, res) {
                         if (inventory.length) {
                             findInventory(inventory, callback)
                         } else {
-                            if (req.body.shipping)
+                            if (req.body.shipping) {
                                 line.push(req.body.shipping)
-                            req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: '5' }
+                                req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: '5' }
+                            }
                             callback(line)
                         }
                     })
