@@ -24,15 +24,12 @@ router.post('/', function(req, res) {
                         // getId.getTermId(req, res, req.body.Terms).then((termref) => {
                         // Set up API call (with OAuth2 accessToken)
                         getId.getTermId(req, res, req.body.SalesTermRef).then((terms_data) => {
-                            console.log(terms_data, "==================")
                             var url = config.api_uri + realmId + '/invoice?minorversion=14'
                             console.log('Making API call to: ' + url)
-                            console.log(req.body.DueDate)
                             let date = req.body.DueDate.split('/')
                             req.body.DueDate = date[2] + '/' + date[1] + '/' + date[0];
                             date = req.body.ShipDate.split('/')
                             req.body.ShipDate = date[2] + '/' + date[1] + '/' + date[0]
-                            console.log(moment(req.body.ShipDate).format('YYYY-MM-DD'), "date")
                             data = {
                                 "Line": response_item,
                                 "DueDate": moment(req.body.DueDate).format('YYYY-MM-DD'),
@@ -51,7 +48,6 @@ router.post('/', function(req, res) {
                                 },
                                 "CustomerMemo": { value: req.body.CustomerMemo }
                             }
-                            console.log(data, "++++++++++++++++++++")
                             var requestObj = {
                                 url: url,
                                 method: "POST",
@@ -82,7 +78,6 @@ router.post('/', function(req, res) {
 
                 function findInventory(inventory, callback) {
                     let sku = inventory.splice(0, 1)[0]
-                    console.log(sku.field_281_raw[0])
                     getId.ItemId(req, res, sku.field_281_raw[0].identifier).then((itemref) => {
                         line.push({
                             "Amount": sku.field_287_raw,
@@ -105,6 +100,7 @@ router.post('/', function(req, res) {
                         } else {
                             if (req.body.shipping)
                                 line.push(req.body.shipping)
+                            req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: '5' }
                             callback(line)
                         }
                     })
