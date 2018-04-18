@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 var conn = mongoose.createConnection('mongodb://localhost/knack');
 var session = mongoose.Schema({}, {
     collection: 'session',
+    timeStamp: true,
     strict: false
 });
 var itemIdInfo = mongoose.Schema({}, {
