@@ -3,11 +3,10 @@ let CronJob = require("cron").CronJob;
 
 module.exports = {
     updateAccessToken() {
-        new CronJob("*/01 * * * *", function() {
-            console.log("cron testttttt")
+        new CronJob("*/55 * * * *", function() {
             tools.refreshTokens().then(function(newToken) {
-                console.log("success", newToken)
-            }).catch((err) => console.log("error", err))
+                console.log("success cron")
+            }).catch((err) => console.log("error cron", err))
         }, null, true);
     }
 }

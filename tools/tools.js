@@ -150,7 +150,7 @@ var Tools = function() {
                         "realmId": realmId
                     }
                 }).exec((err, data) => {
-                    console.log(data, "ppppppppppppppppp")
+                    console.log(data)
                 })
                 console.log('updating token');
             } else {
