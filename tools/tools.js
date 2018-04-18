@@ -149,6 +149,8 @@ var Tools = function() {
                         "data": token.data,
                         "realmId": realmId
                     }
+                }).exec((err, data) => {
+                    console.log(data, "ppppppppppppppppp")
                 })
                 console.log('updating token');
             } else {
