@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var https = require('https');
 var fs = require('fs');
 var http = require('http');
+var cron = require('./tools/cronjob.js')
+
 //var routes = require('./routes/auth.js')(app)
 var privateKey = fs.readFileSync('./s166-62-92-227.secureserver.net.key', 'utf8');
 var certificate = fs.readFileSync('./s166-62-92-227.secureserver.net.crt', 'utf8');
@@ -28,6 +30,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(bodyParser.text({ type: 'text/html' }))
 app.use(bodyParser.json({ type: 'application/*+json' }))
+cron.updateAccessToken();
 
 // Sign In With Intuit, Connect To QuickBooks, or Get App Now
 // These calls will redirect to Intuit's authorization flow
