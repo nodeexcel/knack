@@ -223,7 +223,8 @@ var account = function() {
     this.getCustomerId = function(req, res, name) {
         return new Promise(function(resolve, reject) {
             let token;
-
+            name = name.replace(/'/g, "\\\'")
+            console.log("nameeee", name)
             tools.getRelmId().then((realmId) => {
                 tools.getToken().then((fetchedToken) => {
                     token = fetchedToken;
