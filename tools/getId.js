@@ -254,6 +254,7 @@ var account = function() {
                                 return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                             }
                             // API Call was a success!
+                            console.log("ooooo", response.body)
                             var pars = (JSON.parse(response.body))
                             if (pars.QueryResponse.Customer) {
                                 console.log("========================================")
