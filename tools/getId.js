@@ -234,7 +234,9 @@ var account = function() {
                     })
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from customer  where DisplayName = '` + name + `'`;
-                    var url = config.api_uri + realmId + '/query?query=' + encodeURIComponent(query);
+                    var x = encodeURI(query);
+                    x = x.replace("'", "%27");
+                    var url = config.api_uri + realmId + '/query?query=' + x;
                     console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
