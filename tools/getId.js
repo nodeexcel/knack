@@ -232,7 +232,7 @@ var account = function() {
                         error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
                     })
                     // Set up API call (with OAuth2 accessToken)
-                    var query = `select * from customer  where DisplayName = '` + name.replace(/'/g, "\'") + `'`;
+                    var query = `select * from customer  where DisplayName = '` + name.replace(/'/g, "\\\'") + `'`;
                     var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
@@ -250,7 +250,6 @@ var account = function() {
                         // Check if 401 response was returned - refresh tokens if so!
                         tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                             if (err || response.statusCode != 200) {
-                                console.log(response, "ppppppppppppppppppppppppppppppppppppppp")
                                 return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                             }
                             // API Call was a success!
