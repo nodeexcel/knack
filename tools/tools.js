@@ -146,8 +146,7 @@ var Tools = function() {
                         "accessToken": token.accessToken,
                         "refreshToken": token.refreshToken,
                         "tokenType": token.tokenType,
-                        "data": token.data,
-                        "realmId": realmId
+                        "data": token.data
                     }
                 }).exec((err, data) => {
                     console.log(data)
