@@ -257,6 +257,7 @@ var account = function() {
                             var pars = (JSON.parse(response.body))
                             if (pars.QueryResponse.Customer) {
                                 resolve({ "value": pars.QueryResponse.Customer[0].Id, "name": pars.QueryResponse.Customer[0].DisplayName })
+                                console.log("========================================")
                             } else {
                                 console.log("Customer not found");
                                 resolve()
