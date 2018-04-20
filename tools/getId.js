@@ -275,7 +275,7 @@ var account = function() {
     this.ItemId = function(req, res, name) {
         return new Promise(function(resolve, reject) {
             let token;
-            name = name.replace(/'/g, "\\\'")
+            name = name ? name.replace(/'/g, "\\\'") : name
 
             tools.getRelmId().then((realmId) => {
                 tools.getToken().then((fetchedToken) => {
