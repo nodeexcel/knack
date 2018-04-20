@@ -223,8 +223,8 @@ var account = function() {
     this.getCustomerId = function(req, res, name) {
         return new Promise(function(resolve, reject) {
             let token;
-            // name = name.replace(/'/g, "\\\'")
-            // console.log("nameeee", name)
+
+            console.log("nameeee", name)
             tools.getRelmId().then((realmId) => {
                 tools.getToken().then((fetchedToken) => {
                     token = fetchedToken;
@@ -233,9 +233,10 @@ var account = function() {
                         error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
                     })
                     // Set up API call (with OAuth2 accessToken)
+                    name = name.replace(/'/g, "\\\'")
                     var query = encodeURI(`select * from customer  where DisplayName = '`) + encodeURIComponent(name).replace(/[!'()*]/g, escape) + encodeURI(`'`);
                     console.log(query, "queryyyyyyyyyyyyyy")
-                    var url = config.api_uri + realmId + '/query?query=' + query;
+                    var url = config.api_uri + realmId + '/query?query=' + query + '&minorversion=4';
                     console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
