@@ -235,14 +235,14 @@ var account = function() {
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from customer  where DisplayName = '` + name + `'`;
                     console.log(query, "queryyyyyyyyyyyyyy")
-                    var url = config.api_uri + realmId + '/query?query=' + query;
+                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
                         method: "GET",
                         headers: {
                             'Authorization': 'Bearer ' + token.accessToken,
-                            'content-type': 'application/x-www-form-urlencoded',
+                            'content-type': 'application/json',
                             'Accept': 'application/json',
                         }
                     }
