@@ -49,10 +49,9 @@ router.post('/', function(req, res) {
 
 
 
-
+            var line = []
             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                 var inventory = req.body.inventory;
-                var line = []
                 findInventory(inventory, function(response_item) {
                     getId.ItemId(req, res, req.body.SKU).then((itemref) => {
                         // getId.getTermId(req, res, req.body.Terms).then((termref) => {
