@@ -36,7 +36,7 @@ router.post('/', function(req, res) {
             // Make API call
             request(invoicNoQueryrequestObj, function(err, response) {
                 // Check if 401 response was returned - refresh tokens if so!
-                console.log(response.statusCode, err, "resssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+                console.log(response.statusCode, response.body, "resssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
 
                 tools.checkForUnauthorized(req, invoicNoQueryrequestObj, err, response).then(function({ err, response }) {
                     if (err || response.statusCode != 200) {
