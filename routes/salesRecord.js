@@ -17,6 +17,38 @@ router.post('/', function(req, res) {
                 error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
             })
             var data;
+
+
+
+            var invoicNoQuery = `select * from Account  where DocNumber = '` + req.DocNumber + `'`;
+            var url = config.api_uri + realmId + '/query?query=' + encodeURI(invoicNoQuery);
+            console.log('Making API call to: ' + url)
+            var invoicNoQueryrequestObj = {
+                url: url,
+                method: "GET",
+                headers: {
+                    'Authorization': 'Bearer ' + token.accessToken,
+                    'content-type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            }
+
+            // Make API call
+            request(invoicNoQueryrequestObj, function(err, response) {
+                // Check if 401 response was returned - refresh tokens if so!
+                tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
+                    console.log(response.statusCode, "resssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+                    if (err || response.statusCode != 200) {
+                        return res.json({ error: err, statusCode: response.statusCode, error: response.body })
+                    } else {
+                        console.log("successssssssssssssssssssssssssssssssssssssss")
+                    }
+                })
+            })
+
+
+
+
             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                 var inventory = req.body.inventory;
                 var line = []
