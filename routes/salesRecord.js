@@ -83,16 +83,15 @@ router.post('/', function(req, res) {
                                                     'Authorization': 'Bearer ' + token.accessToken
                                                 }
                                             }
-
+                                            pars.QueryResponse.Invoice[0].TotalAmt = 25;
                                             // Make API call
-                                            request(pars, function(err, response) {
+                                            request(pars.QueryResponse.Invoice[0], function(err, response) {
                                                 // Check if 401 response was returned - refresh tokens if so!
-                                                tools.checkForUnauthorized(req, pars, err, response).then(function({ err, response }) {
+                                                tools.checkForUnauthorized(req, pars.QueryResponse.Invoice[0], err, response).then(function({ err, response }) {
                                                     if (err || response.statusCode != 200) {
                                                         return res.json({ error: err, statusCode: response.statusCode, response: response.body })
                                                     }
                                                     // API Call was a success!
-                                                    //tools.saveCustomerId(req.body.KnackID,response.body.Customer.Id)
                                                     res.json(response.body)
                                                 }, function(err) {
                                                     return res.json(err)
