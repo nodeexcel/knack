@@ -82,7 +82,6 @@ router.post('/', function(req, res) {
                                 },
                                 "CustomerMemo": { value: req.body.CustomerMemo }
                             }
-                            console.log(data, "ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp")
                             var requestObj = {
                                 url: url,
                                 method: "POST",
@@ -111,38 +110,71 @@ router.post('/', function(req, res) {
                     })
                 })
 
-                function findInventory(inventory, callback) {
-                    let sku = inventory.splice(0, 1)[0]
-                    getId.ItemId(req, res, sku.field_281_raw[0].identifier).then((itemref) => {
-                        console.log(itemref, "ppppppppppppppppppppp")
-                        line.push({
-                            "Amount": sku.field_287_raw,
-                            "DetailType": "SalesItemLineDetail",
-                            "SalesItemLineDetail": {
-                                "ItemRef": {
-                                    "value": itemref.value,
-                                    "name": itemref.name
-                                },
-                                "TaxCodeRef": {
-                                    "value": "5"
-                                },
-                                "Qty": sku.field_286_raw,
-                                "UnitPrice": sku.field_285_raw
-                            },
-                            "Description": sku.field_339
-                        })
-                        if (inventory.length) {
-                            findInventory(inventory, callback)
-                        } else {
-                            if (req.body.shipping) {
-                                line.push(req.body.shipping)
-                                req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: '5' }
-                            }
-                            callback(line)
-                        }
-                    })
-                }
+                // function findInventory(inventory, callback) {
+                //     let sku = inventory.splice(0, 1)[0]
+                //     getId.ItemId(req, res, sku.field_281_raw[0].identifier).then((itemref) => {
+                //         console.log(itemref, "ppppppppppppppppppppp")
+                //         line.push({
+                //             "Amount": sku.field_287_raw,
+                //             "DetailType": "SalesItemLineDetail",
+                //             "SalesItemLineDetail": {
+                //                 "ItemRef": {
+                //                     "value": itemref.value,
+                //                     "name": itemref.name
+                //                 },
+                //                 "TaxCodeRef": {
+                //                     "value": "5"
+                //                 },
+                //                 "Qty": sku.field_286_raw,
+                //                 "UnitPrice": sku.field_285_raw
+                //             },
+                //             "Description": sku.field_339
+                //         })
+                //         if (inventory.length) {
+                //             findInventory(inventory, callback)
+                //         } else {
+                //             if (req.body.shipping) {
+                //                 line.push(req.body.shipping)
+                //                 req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: '5' }
+                //             }
+                //             callback(line)
+                //         }
+                //     })
+                // }
             }).catch(err => console.log(err))
+
+            function findInventory(inventory, callback) {
+                let sku = inventory.splice(0, 1)[0]
+                getId.ItemId(req, res, sku.field_281_raw[0].identifier).then((itemref) => {
+                    console.log(itemref, "ppppppppppppppppppppp")
+                    line.push({
+                        "Amount": sku.field_287_raw,
+                        "DetailType": "SalesItemLineDetail",
+                        "SalesItemLineDetail": {
+                            "ItemRef": {
+                                "value": itemref.value,
+                                "name": itemref.name
+                            },
+                            "TaxCodeRef": {
+                                "value": "5"
+                            },
+                            "Qty": sku.field_286_raw,
+                            "UnitPrice": sku.field_285_raw
+                        },
+                        "Description": sku.field_339
+                    })
+                    if (inventory.length) {
+                        findInventory(inventory, callback)
+                    } else {
+                        if (req.body.shipping) {
+                            line.push(req.body.shipping)
+                            req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: '5' }
+                        }
+                        callback(line)
+                    }
+                })
+            }
+
         })
     });
 
