@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
                     } else {
                         var pars = (JSON.parse(response.body))
                         if (pars.QueryResponse.Invoice.length != 0) {
-                            console.log(pars.QueryResponse.Invoice[0].Id, "==============================================================================================================")
+                            console.log(pars.QueryResponse, "==============================================================================================================")
                             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                                 var inventory = req.body.inventory;
                                 findInventory(inventory, function(response_item) {
@@ -85,9 +85,9 @@ router.post('/', function(req, res) {
                                             }
 
                                             // Make API call
-                                            request(requestObj, function(err, response) {
+                                            request(pars, function(err, response) {
                                                 // Check if 401 response was returned - refresh tokens if so!
-                                                tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
+                                                tools.checkForUnauthorized(req, pars, err, response).then(function({ err, response }) {
                                                     if (err || response.statusCode != 200) {
                                                         return res.json({ error: err, statusCode: response.statusCode, response: response.body })
                                                     }
