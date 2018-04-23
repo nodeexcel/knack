@@ -40,7 +40,7 @@ router.post('/', function(req, res) {
                         return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                     } else {
                         var pars = (JSON.parse(response.QueryResponse))
-                        console.log(pars.Invoice, "successssssssssssssssssssssssssssssssssssssss")
+                        console.log(pars, "successssssssssssssssssssssssssssssssssssssss")
                     }
                 })
             })
