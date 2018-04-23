@@ -43,8 +43,7 @@ router.post('/', function(req, res) {
                         var pars = (JSON.parse(response.body))
                         if (pars.QueryResponse.Invoice.length != 0) {
                             console.log("==============================================================================================================")
-                            var line = []
-                            var line = [] getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
+                            getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                                 var inventory = req.body.inventory;
                                 findInventory(inventory, function(response_item) {
                                     getId.ItemId(req, res, req.body.SKU).then((itemref) => {
