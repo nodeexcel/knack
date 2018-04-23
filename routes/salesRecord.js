@@ -6,7 +6,7 @@ var express = require('express')
 var router = express.Router()
 var moment = require('moment')
 router.post('/', function(req, res) {
-    console.log(JSON.stringify(req.body), "ppppppppppppppppp")
+    console.log(JSON.stringify(req.body), "bodyyyyyyyyyyyyyyyyyyyyyyyyyy")
     let token;
 
     tools.getRelmId().then((realmId) => {
@@ -82,6 +82,7 @@ router.post('/', function(req, res) {
                                 },
                                 "CustomerMemo": { value: req.body.CustomerMemo }
                             }
+                            console.log(data, "ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp")
                             var requestObj = {
                                 url: url,
                                 method: "POST",
