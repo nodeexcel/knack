@@ -20,7 +20,7 @@ router.post('/', function(req, res) {
 
 
 
-            var invoicNoQuery = `select * from invoice  where DocNumber = '` + req.DocNumber + `'`;
+            var invoicNoQuery = `select * from invoice  where DocNumber = '` + req.body.DocNumber + `'`;
             var url = config.api_uri + realmId + '/query?query=' + encodeURI(invoicNoQuery);
             console.log('Making API call to: ' + url)
             var invoicNoQueryrequestObj = {
