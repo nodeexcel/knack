@@ -6,9 +6,7 @@ var express = require('express')
 var router = express.Router()
 var moment = require('moment')
 router.post('/', function(req, res) {
-    console.log(JSON.stringify(req.body), "bodyyyyyyyyyyyyyyyyyyyyyyyyyy")
     let token;
-
     tools.getRelmId().then((realmId) => {
         tools.getToken().then((fetchedToken) => {
             token = fetchedToken;
@@ -37,12 +35,12 @@ router.post('/', function(req, res) {
             request(invoicNoQueryrequestObj, function(err, response) {
                 // Check if 401 response was returned - refresh tokens if so!
                 console.log(response.statusCode, response.body, "resssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
-
                 tools.checkForUnauthorized(req, invoicNoQueryrequestObj, err, response).then(function({ err, response }) {
                     if (err || response.statusCode != 200) {
                         return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                     } else {
-                        console.log("successssssssssssssssssssssssssssssssssssssss")
+                        var pars = (JSON.parse(response.body))
+                        console.log(pars.Id "successssssssssssssssssssssssssssssssssssssss")
                     }
                 })
             })

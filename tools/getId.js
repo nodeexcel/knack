@@ -224,7 +224,6 @@ var account = function() {
         return new Promise(function(resolve, reject) {
             let token;
             name = name.replace(/'/g, "\\\'")
-            console.log("nameeee", name)
             tools.getRelmId().then((realmId) => {
                 tools.getToken().then((fetchedToken) => {
                     token = fetchedToken;
@@ -234,7 +233,6 @@ var account = function() {
                     })
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from customer  where DisplayName = '` + name + `'`;
-                    console.log(query, "queryyyyyyyyyyyyyy")
                     var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
@@ -255,7 +253,6 @@ var account = function() {
                                 return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                             }
                             // API Call was a success!
-                            console.log("ooooo", response.body)
                             var pars = (JSON.parse(response.body))
                             if (pars.QueryResponse.Customer) {
                                 resolve({ "value": pars.QueryResponse.Customer[0].Id, "name": pars.QueryResponse.Customer[0].DisplayName })
