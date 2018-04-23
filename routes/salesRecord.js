@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
                     } else {
                         var pars = (JSON.parse(response.body))
                         if (pars.QueryResponse.Invoice.length != 0) {
-                            console.log("==============================================================================================================")
+                            console.log(pars.QueryResponse.Invoice[0].Id, "==============================================================================================================")
                             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                                 var inventory = req.body.inventory;
                                 findInventory(inventory, function(response_item) {
@@ -72,7 +72,8 @@ router.post('/', function(req, res) {
                                                 "SalesTermRef": {
                                                     "value": terms_data.value
                                                 },
-                                                "CustomerMemo": { value: req.body.CustomerMemo }
+                                                "CustomerMemo": { value: req.body.CustomerMemo },
+                                                "Id": pars.QueryResponse.Invoice[0].Id
                                             }
                                             var requestObj = {
                                                 url: url,
