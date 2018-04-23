@@ -30,6 +30,7 @@ router.post('/', function(req, res) {
                     'Accept': 'application/json',
                 }
             }
+            var line = []
 
             // Make API call
             request(invoicNoQueryrequestObj, function(err, response) {
@@ -42,7 +43,6 @@ router.post('/', function(req, res) {
                         var pars = (JSON.parse(response.body))
                         if (pars.QueryResponse.Invoice.length != 0) {
                             console.log("==============================================================================================================")
-                            var line = []
                             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                                 var inventory = req.body.inventory;
                                 findInventory(inventory, function(response_item) {
@@ -105,7 +105,6 @@ router.post('/', function(req, res) {
 
                             }).catch(err => console.log(err))
                         } else {
-                            var line = []
                             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                                 var inventory = req.body.inventory;
                                 findInventory(inventory, function(response_item) {
