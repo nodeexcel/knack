@@ -75,7 +75,9 @@ router.post('/', function(req, res) {
                                                     "value": terms_data.value
                                                 },
                                                 "CustomerMemo": { value: req.body.CustomerMemo },
-                                                "Id": pars.QueryResponse.Invoice[0].Id
+                                                "Id": pars.QueryResponse.Invoice[0].Id,
+                                                "SyncToken": pars.QueryResponse.Invoice[0].SyncToken,
+                                                "MetaData": pars.QueryResponse.Invoice[0].MetaData
                                             }
                                             console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
                                             var requestObj = {
