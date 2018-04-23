@@ -42,7 +42,7 @@ router.post('/', function(req, res) {
                     } else {
                         var pars = (JSON.parse(response.body))
                         if (pars.QueryResponse.Invoice.length != 0) {
-                            console.log(pars.QueryResponse, "==============================================================================================================")
+                            console.log(pars.QueryResponse.Invoice, "==============================================================================================================")
                             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                                 var inventory = req.body.inventory;
                                 findInventory(inventory, function(response_item) {
@@ -75,6 +75,7 @@ router.post('/', function(req, res) {
                                                 "CustomerMemo": { value: req.body.CustomerMemo },
                                                 "Id": pars.QueryResponse.Invoice[0].Id
                                             }
+                                            console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
                                             var requestObj = {
                                                 url: url,
                                                 method: "POST",
@@ -83,15 +84,16 @@ router.post('/', function(req, res) {
                                                     'Authorization': 'Bearer ' + token.accessToken
                                                 }
                                             }
-                                            pars.QueryResponse.Invoice[0].TotalAmt = 25;
+
                                             // Make API call
-                                            request(pars.QueryResponse.Invoice[0], function(err, response) {
+                                            request(requestObj, function(err, response) {
                                                 // Check if 401 response was returned - refresh tokens if so!
-                                                tools.checkForUnauthorized(req, pars.QueryResponse.Invoice[0], err, response).then(function({ err, response }) {
+                                                tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                                                     if (err || response.statusCode != 200) {
                                                         return res.json({ error: err, statusCode: response.statusCode, response: response.body })
                                                     }
                                                     // API Call was a success!
+                                                    //tools.saveCustomerId(req.body.KnackID,response.body.Customer.Id)
                                                     res.json(response.body)
                                                 }, function(err) {
                                                     return res.json(err)
