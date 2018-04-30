@@ -260,7 +260,7 @@ var Tools = function() {
             })
         });
     }
-    this.fetchItemId = function(KnackId) {
+    this.fetchItemId = function(KnackId, name) {
         return new Promise((resolve, reject) => {
             db.storedItemIds.findOne({ knackId: KnackId }).exec((err, data) => {
                 if (err) {
@@ -268,9 +268,9 @@ var Tools = function() {
                 } else {
                     if (data) {
                         data = JSON.parse(JSON.stringify(data));
-                        resolve(data.quickbookId);
+                        resolve({ id: data.quickbookId });
                     } else {
-                        reject("data not found");
+                        resolve({ name: name })
                     }
                 }
             })
