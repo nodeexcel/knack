@@ -22,7 +22,7 @@ router.post('/', function(req, res) {
                 if (customerId.id)
                     var query = `select * from Customer  where Id = '` + customerId.id + `'`;
                 else
-                    var query = `select * from Customer  where DisplayName = '` + customerId.DisplayName + `'`;
+                    var query = `select * from Customer  where DisplayName = '` + encodeURI(customerId.DisplayName) + `'`;
 
                 var url = config.api_uri + realmId + '/query?query=' + query;
                 console.log('Making API call to: ' + url)

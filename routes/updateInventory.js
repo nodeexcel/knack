@@ -22,7 +22,7 @@ router.post('/', function(req, res) {
                 if (itemId.id)
                     var query = `select * from Item  where Id = '` + itemId.id + `'`;
                 else
-                    var query = `select * from Item  where Name = '` + itemId.name + `'`
+                    var query = `select * from Item  where Name = '` + encodeURI(itemId.name) + `'`
                 var url = config.api_uri + realmId + '/query?query=' + query;
                 console.log('Making API call to: ' + url)
                 var requestObj = {
@@ -66,6 +66,7 @@ router.post('/', function(req, res) {
                         };
 
                         let resBody = (JSON.parse(response.body))
+                        console.log(resBody)
                         data.SyncToken = resBody.QueryResponse.Item[0].SyncToken;
                         data.Id = resBody.QueryResponse.Item[0].Id;
 
