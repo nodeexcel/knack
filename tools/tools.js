@@ -276,7 +276,7 @@ var Tools = function() {
             })
         })
     }
-    this.fetchCustomerId = function(KnackId) {
+    this.fetchCustomerId = function(KnackId, name) {
         return new Promise((resolve, reject) => {
             db.storedCustomerIds.findOne({ knackId: KnackId }).exec((err, data) => {
                 if (err) {
@@ -284,15 +284,15 @@ var Tools = function() {
                 } else {
                     if (data) {
                         data = JSON.parse(JSON.stringify(data));
-                        resolve(data.quickbookId);
+                        resolve({ id: data.quickbookId });
                     } else {
-                        reject("data not found");
+                        resolve({ name: name });
                     }
                 }
             })
         })
     }
-    this.fetchSupplierId = function(KnackId) {
+    this.fetchSupplierId = function(KnackId, AcctNum) {
         return new Promise((resolve, reject) => {
             db.storedSupplierIds.findOne({ knackId: KnackId }).exec((err, data) => {
                 if (err) {
@@ -300,9 +300,9 @@ var Tools = function() {
                 } else {
                     if (data) {
                         data = JSON.parse(JSON.stringify(data));
-                        resolve(data.quickbookId);
+                        resolve({ id: data.quickbookId });
                     } else {
-                        reject("data not found");
+                        resolve({ AcctNum: AcctNum })
                     }
                 }
             })

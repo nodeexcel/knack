@@ -19,7 +19,11 @@ router.post('/', function(req, res) {
             })
             // Set up API call (with OAuth2 accessToken)
             tools.fetchSupplierId(req.body.KnackID).then((supplierId) => {
-                var query = `select * from Vendor where Id = '` + supplierId + `'`;
+                if (supplierId.id)
+                    var query = `select * from Vendor where Id = '` + supplierId.id + `'`;
+                else
+                    var query = `select * from Vendor where Id = '` + supplierId.AcctNum + `'`;
+
                 var url = config.api_uri + realmId + '/query?query=' + query;
                 console.log('Making API call to: ' + url)
                 var requestObj = {
@@ -40,6 +44,7 @@ router.post('/', function(req, res) {
                             return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                         }
                         // API Call was a success!
+
                         var data = {
                             "BillAddr": {
                                 "Line1": req.body.AddressStreet,

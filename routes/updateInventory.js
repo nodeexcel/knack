@@ -20,7 +20,7 @@ router.post('/', function(req, res) {
             // Set up API call (with OAuth2 accessToken)
             tools.fetchItemId(req.body.KnackID, req.body.Name).then((itemId) => {
                 if (itemId.id)
-                    var query = `select * from Item  where Id = '` + itemId + `'`;
+                    var query = `select * from Item  where Id = '` + itemId.id + `'`;
                 else
                     var query = `select * from Item  where Name = '` + itemId.name + `'`
                 var url = config.api_uri + realmId + '/query?query=' + query;
