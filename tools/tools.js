@@ -194,10 +194,12 @@ var Tools = function() {
     this.getToken = function() {
         return new Promise((resolve, reject) => {
             db.knack_session.findOne({}).exec((err, data) => {
+                console.log(err, data)
                 if (err) {
                     reject(err)
                 } else {
                     if (data) {
+                        // console.log(data)
                         data = JSON.parse(JSON.stringify(data));
                         resolve(tools.intuitAuth.createToken(
                             data.accessToken, data.refreshToken,
