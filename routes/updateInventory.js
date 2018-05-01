@@ -37,7 +37,6 @@ router.post('/', function(req, res) {
 
                 // Make API call
                 request(requestObj, function(err, response) {
-                    console.log(response, "pppppppppppppppppppppppppp")
                     // Check if 401 response was returned - refresh tokens if so!
                     tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                         if (err || response.statusCode != 200) {
@@ -67,7 +66,7 @@ router.post('/', function(req, res) {
                         };
 
                         let resBody = (JSON.parse(response.body))
-                        console.log(resBody)
+                        console.log(resBody.QueryResponse.Item, "pppppppppppppppppppppppppppppppppppppppppppppppp")
                         data.SyncToken = resBody.QueryResponse.Item[0].SyncToken;
                         data.Id = resBody.QueryResponse.Item[0].Id;
 
