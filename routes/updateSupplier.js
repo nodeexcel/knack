@@ -40,7 +40,6 @@ router.post('/', function(req, res) {
 
                 // Make API call
                 request(requestObj, function(err, response) {
-                    console.log(response, "pppppppppppppppppppppppppppppppppp")
                     // Check if 401 response was returned - refresh tokens if so!
                     tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                         if (err || response.statusCode != 200) {
@@ -76,8 +75,9 @@ router.post('/', function(req, res) {
                         let resBody = (JSON.parse(response.body))
                         data.SyncToken = resBody.QueryResponse.Vendor[0].SyncToken;
                         data.Id = resBody.QueryResponse.Vendor[0].Id;
-
-
+                        if (!supplierId.id) {
+                            tools.saveSupplierId(req.body.KnackID, resBody.QueryResponse.Vendor[0].Id)
+                        }
                         getId.getTermId(req, res, req.body.terms).then((termref) => {
                             data.TermRef = termref;
                             // Set up API call (with OAuth2 accessToken)
