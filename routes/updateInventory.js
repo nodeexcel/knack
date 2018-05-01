@@ -66,7 +66,7 @@ router.post('/', function(req, res) {
                         };
 
                         let resBody = (JSON.parse(response.body))
-                        console.log(resBody.QueryResponse.Item, "pppppppppppppppppppppppppppppppppppppppppppppppp")
+                        console.log(resBody.QueryResponse.Item[0].Id, "pppppppppppppppppppppppppppppppppppppppppppppppp")
                         data.SyncToken = resBody.QueryResponse.Item[0].SyncToken;
                         data.Id = resBody.QueryResponse.Item[0].Id;
 
