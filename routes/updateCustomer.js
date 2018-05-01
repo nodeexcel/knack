@@ -21,9 +21,10 @@ router.post('/', function(req, res) {
             tools.fetchCustomerId(req.body.KnackID, req.body.DisplayName).then((customerId) => {
                 if (customerId.id)
                     var query = `select * from Customer  where Id = '` + customerId.id + `'`;
-                else
+                else if (customerId.DisplayName)
                     var query = `select * from Customer  where DisplayName = '` + encodeURI(customerId.DisplayName) + `'`;
-
+                else
+                    var query = `select * from Customer  where DisplayName = '` + req.body.DisplayName + `'`;
                 var url = config.api_uri + realmId + '/query?query=' + query;
                 console.log('Making API call to: ' + url)
                 var requestObj = {
