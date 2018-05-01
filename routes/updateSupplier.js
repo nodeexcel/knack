@@ -22,9 +22,10 @@ router.post('/', function(req, res) {
                 console.log(supplierId.id, "kkkkkkkkkkkkkkkkkkkkkkkk", supplierId.AcctNum)
                 if (supplierId.id)
                     var query = `select * from Vendor where Id = '` + supplierId.id + `'`;
-                else
+                else if (supplierId.AcctNum)
                     var query = `select * from Vendor where Id = '` + supplierId.AcctNum + `'`;
-
+                else
+                    var query = `select * from Vendor where DisplayName = '` + req.body.DisplayName + `'`;
                 var url = config.api_uri + realmId + '/query?query=' + query;
                 console.log('Making API call to: ' + url)
                 var requestObj = {
