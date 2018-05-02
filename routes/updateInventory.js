@@ -66,7 +66,7 @@ router.post('/', function(req, res) {
                         };
 
                         let resBody = (JSON.parse(response.body))
-                        console.log(resBody.QueryResponse.Item[0].Id, "pppppppppppppppppppppppppppppppppppppppppppppppp")
+                        console.log(resBody.QueryResponse, "pppppppppppppppppppppppppppppppppppppppppppppppp")
                         if (!itemId.id) {
                             tools.saveItemId(req.body.KnackID, resBody.QueryResponse.Item[0].Id)
                         }
