@@ -19,6 +19,7 @@ router.post('/', function(req, res) {
             })
             // Set up API call (with OAuth2 accessToken)
             tools.fetchItemId(req.body.KnackID, req.body.Name).then((itemId) => {
+                console.log(itemId, "data=============================")
                 if (itemId.id)
                     var query = `select * from Item  where Id = '` + itemId.id + `'`;
                 else
