@@ -282,7 +282,7 @@ var account = function() {
                         error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
                     })
                     // Set up API call (with OAuth2 accessToken)
-                    var query = `select * from item  where SKU = '` + name + `'`;
+                    var query = `select * from item  where Name = '` + name + `'`;
                     var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
