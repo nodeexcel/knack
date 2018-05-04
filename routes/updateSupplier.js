@@ -9,7 +9,7 @@ var router = express.Router()
 
 router.post('/', function(req, res) {
     let token;
-    req.body.DisplayName = req.body.DisplayName.replace(/'/g, "\\\'")
+    req.body.DisplayName = req.body.DisplayName.replace(/'|&/g, "\\\'")
     tools.getRelmId().then((realmId) => {
         tools.getToken().then((fetchedToken) => {
             token = fetchedToken;
