@@ -39,7 +39,6 @@ router.post('/', function(req, res) {
 
                 // Make API call
                 request(requestObj, function(err, response) {
-                    console.log(response, "===============================================================================")
                     // Check if 401 response was returned - refresh tokens if so!
                     tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                         if (err || response.statusCode != 200) {
