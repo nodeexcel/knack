@@ -19,7 +19,6 @@ router.post('/', function(req, res) {
             })
             // Set up API call (with OAuth2 accessToken)
             tools.fetchSupplierId(req.body.KnackID).then((supplierId) => {
-                console.log(supplierId.id, "kkkkkkkkkkkkkkkkkkkkkkkk", supplierId.AcctNum)
                 if (supplierId.id)
                     var query = `select * from Vendor where Id = '` + supplierId.id + `'`;
                 else if (supplierId.AcctNum)
@@ -40,6 +39,7 @@ router.post('/', function(req, res) {
 
                 // Make API call
                 request(requestObj, function(err, response) {
+                    console.log(response, "===============================================================================")
                     // Check if 401 response was returned - refresh tokens if so!
                     tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                         if (err || response.statusCode != 200) {
