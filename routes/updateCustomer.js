@@ -19,7 +19,7 @@ router.post('/', function(req, res) {
             })
             // Set up API call (with OAuth2 accessToken)
             tools.fetchCustomerId(req.body.KnackID, req.body.DisplayName).then((customerId) => {
-                var name = req.body.DisplayName.split("|")
+                var name = req.body.DisplayName.split(" | ")
                 if (customerId.id)
                     var query = `select * from Customer  where Id = '` + customerId.id + `'`;
                 else if (customerId.DisplayName)
