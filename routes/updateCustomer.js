@@ -25,7 +25,7 @@ router.post('/', function(req, res) {
                     var query = `select * from Customer  where DisplayName = '` + encodeURI(customerId.DisplayName) + `'`;
                 else
                     var query = `select * from Customer  where DisplayName = '` + req.body.DisplayName + `'`;
-                var url = config.api_uri + realmId + '/query?query=' + escape(query);
+                var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                 console.log('Making API call to: ' + url)
                 var requestObj = {
                     url: url,
