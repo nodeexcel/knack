@@ -19,12 +19,14 @@ router.post('/', function(req, res) {
             })
             // Set up API call (with OAuth2 accessToken)
             tools.fetchCustomerId(req.body.KnackID, req.body.DisplayName).then((customerId) => {
+                var name = req.body.DisplayName.split("|")
                 if (customerId.id)
                     var query = `select * from Customer  where Id = '` + customerId.id + `'`;
                 else if (customerId.DisplayName)
                     var query = `select * from Customer  where DisplayName = '` + encodeURI(customerId.DisplayName) + `'`;
                 else
-                    var query = `select * from Customer  where DisplayName = '` + req.body.DisplayName + `'`;
+                    var query = `select * from Customer  where DisplayName = '` + name[0] + `'`;
+                console.log(query, "ppppppppppppppp")
                 var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                 console.log('Making API call to: ' + url)
                 var requestObj = {
