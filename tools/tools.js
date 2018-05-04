@@ -225,6 +225,7 @@ var Tools = function() {
             knackId: KnackId
         })
         idsInfo.save((err, data) => {
+            console.log(err, data, "inserted data")
             if (err) {
                 console.log(err)
             } else {
