@@ -9,7 +9,6 @@ var router = express.Router()
 
 router.post('/', function(req, res) {
     let token;
-    console.log(req.body, "ppppppppppppppp")
     tools.getRelmId().then((realmId) => {
         tools.getToken().then((fetchedToken) => {
             token = fetchedToken;
@@ -53,7 +52,7 @@ router.post('/', function(req, res) {
                     "URI": req.body.WebAddr
                 },
                 "ShipAddr": req.body.ShipAddr,
-                "GivenName": req.body.GivenName
+                // "GivenName": req.body.GivenName
             };
             getId.getPaymentMethodId(req, res, req.body.PaymentMethod).then((paymentMethodref) => {
                 data.PaymentMethodRef = paymentMethodref;
