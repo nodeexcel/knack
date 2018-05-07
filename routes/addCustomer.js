@@ -8,6 +8,7 @@ var router = express.Router()
 
 
 router.post('/', function(req, res) {
+    console.log(JSON.stringify(req.body, "pppppppppp"))
     let token;
     tools.getRelmId().then((realmId) => {
         tools.getToken().then((fetchedToken) => {
@@ -16,6 +17,9 @@ router.post('/', function(req, res) {
             if (!realmId) return res.json({
                 error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
             })
+            if (req.body.ParentCustomer) {
+                console.logf("pppppppppppppppppppppppppppp")
+            }
             var data = {
                 "BillAddr": {
                     "Line1": req.body.BillingStreet,
