@@ -61,6 +61,7 @@ router.post('/', function(req, res) {
                 };
 
                 if (parentref) {
+                    data.Job = true;
                     data.BillWithParent = true;
                     data.ParentRef = parentref
                 }
