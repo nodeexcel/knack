@@ -9,7 +9,7 @@ var router = express.Router()
 
 router.post('/', function(req, res) {
     let token;
-
+    console.log(req.body, "ppppppppppppppp")
     tools.getRelmId().then((realmId) => {
         tools.getToken().then((fetchedToken) => {
             token = fetchedToken;
