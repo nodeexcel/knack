@@ -8,7 +8,8 @@ var router = express.Router()
 
 
 router.post('/', function(req, res) {
-    console.log(JSON.stringify(req.body, "pppppppppp"))
+    console.log(req.body, "oooooooooooooooooooooo")
+    console.log(JSON.stringify(req.body, "ppppppppppppppppppppppppppppppppppppppppp"))
     let token;
     tools.getRelmId().then((realmId) => {
         tools.getToken().then((fetchedToken) => {
