@@ -8,8 +8,6 @@ var router = express.Router()
 
 
 router.post('/', function(req, res) {
-    console.log(req.body, "oooooooooooooooooooooo")
-    console.log(JSON.stringify(req.body), "ppppppppppppppppppppppppppppppppppppppppp")
     getId.getCustomerId(req, res, req.body.ParentCustomer).then((parentref) => {
         console.log(parentref, "parentrefffffffffffffffffff")
         let token;
@@ -61,6 +59,12 @@ router.post('/', function(req, res) {
                     "ShipAddr": req.body.ShipAddr,
                     // "GivenName": req.body.GivenName
                 };
+
+                if (parentref) {
+                    data.BillWithParent = true;
+                    data.ParentRef = parentref
+                }
+                console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 getId.getPaymentMethodId(req, res, req.body.PaymentMethod).then((paymentMethodref) => {
                     data.PaymentMethodRef = paymentMethodref;
                     getId.getTermId(req, res, req.body.Terms).then((termref) => {
