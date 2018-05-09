@@ -6,7 +6,6 @@ var express = require('express')
 var router = express.Router()
 var moment = require('moment')
 router.post('/', function(req, res) {
-    console.log(req.body, "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp")
     let token;
     tools.getRelmId().then((realmId) => {
         tools.getToken().then((fetchedToken) => {
@@ -36,15 +35,12 @@ router.post('/', function(req, res) {
             // Make API call
             request(invoicNoQueryrequestObj, function(err, response) {
                 // Check if 401 response was returned - refresh tokens if so!
-                console.log(response.statusCode, response.body, "resssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
                 tools.checkForUnauthorized(req, invoicNoQueryrequestObj, err, response).then(function({ err, response }) {
                     if (err || response.statusCode != 200) {
                         return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                     } else {
                         var pars = (JSON.parse(response.body))
                         if (pars.QueryResponse.Invoice && pars.QueryResponse.Invoice.length != 0) {
-                            console.log(pars.QueryResponse.Invoice[0], "==============================================================================================================")
-                            console.log(pars.QueryResponse.Invoice[0].Line, "==============================================================================================================")
                             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
                                 var inventory = req.body.inventory;
                                 findInventory(inventory, function(response_item) {
@@ -79,7 +75,6 @@ router.post('/', function(req, res) {
                                                 "SyncToken": pars.QueryResponse.Invoice[0].SyncToken,
                                                 "MetaData": pars.QueryResponse.Invoice[0].MetaData
                                             }
-                                            console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
                                             var requestObj = {
                                                 url: url,
                                                 method: "POST",
@@ -184,34 +179,56 @@ router.post('/', function(req, res) {
                 let sku = inventory.splice(0, 1)[0]
                 getId.ItemId(req, res, sku.field_281_raw[0].identifier).then((itemref) => {
                     console.log(itemref, "ppppppppppppppppppppp")
-                    line.push({
-                        "Amount": sku.field_287_raw,
-                        "DetailType": "SalesItemLineDetail",
-                        "SalesItemLineDetail": {
-                            "ItemRef": {
-                                "value": itemref.value,
-                                "name": itemref.name
-                            },
-                            "TaxCodeRef": {
-                                "value": "5"
-                            },
-                            "Qty": sku.field_286_raw,
-                            "UnitPrice": sku.field_285_raw
-                        },
-                        "Description": sku.field_339
-                    })
-                    if (inventory.length) {
-                        findInventory(inventory, callback)
-                    } else {
-                        if (req.body.shipping) {
-                            line.push(req.body.shipping)
-                            req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: '5' }
+
+                    var taxCodeQuery = `select * from taxCode  where Name = '` + req.body.taxCode + `'`;
+                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(taxCodeQuery);
+                    console.log('Making API call to: ' + url)
+                    var taxCodeQueryrequestObj = {
+                        url: url,
+                        method: "GET",
+                        headers: {
+                            'Authorization': 'Bearer ' + token.accessToken,
+                            'content-type': 'application/json',
+                            'Accept': 'application/json',
                         }
-                        callback(line)
                     }
+                    request(taxCodeQueryrequestObj, function(err, response) {
+                        // Check if 401 response was returned - refresh tokens if so!
+                        tools.checkForUnauthorized(req, taxCodeQueryrequestObj, err, response).then(function({ err, response }) {
+                            if (err || response.statusCode != 200) {
+                                return res.json({ error: err, statusCode: response.statusCode, error: response.body })
+                            } else {
+                                console.log(response, "=================================")
+                                line.push({
+                                    "Amount": sku.field_287_raw,
+                                    "DetailType": "SalesItemLineDetail",
+                                    "SalesItemLineDetail": {
+                                        "ItemRef": {
+                                            "value": itemref.value,
+                                            "name": itemref.name
+                                        },
+                                        "TaxCodeRef": {
+                                            "value": "5"
+                                        },
+                                        "Qty": sku.field_286_raw,
+                                        "UnitPrice": sku.field_285_raw
+                                    },
+                                    "Description": sku.field_339
+                                })
+                                if (inventory.length) {
+                                    findInventory(inventory, callback)
+                                } else {
+                                    if (req.body.shipping) {
+                                        line.push(req.body.shipping)
+                                        req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: '5' }
+                                    }
+                                    callback(line)
+                                }
+                            }
+                        })
+                    })
                 })
             }
-
         })
     });
 
