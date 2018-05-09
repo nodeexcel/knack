@@ -199,7 +199,9 @@ router.post('/', function(req, res) {
                             if (err || response.statusCode != 200) {
                                 return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                             } else {
-                                console.log(response, "=================================")
+                                console.log(response..body, "=================================")
+                                var pars = (JSON.parse(response.body))
+                                // if (pars.QueryResponse.Invoice && pars.QueryResponse.Invoice.length != 0) {
                                 line.push({
                                     "Amount": sku.field_287_raw,
                                     "DetailType": "SalesItemLineDetail",
@@ -209,7 +211,7 @@ router.post('/', function(req, res) {
                                             "name": itemref.name
                                         },
                                         "TaxCodeRef": {
-                                            "value": "5"
+                                            "value": pars.QueryResponse.TaxCode.Id ? pars.QueryResponse.TaxCode.Id : "5"
                                         },
                                         "Qty": sku.field_286_raw,
                                         "UnitPrice": sku.field_285_raw
