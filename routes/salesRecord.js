@@ -225,7 +225,7 @@ router.post('/', function(req, res) {
                                 } else {
                                     if (req.body.shipping) {
                                         line.push(req.body.shipping)
-                                        req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: pars.QueryResponse.TaxCode[0].Id ? pars.QueryResponse.TaxCode[0].Id : "5" }
+                                        req.body.shipping.SalesItemLineDetail['TaxCodeRef'] = { value: pars.QueryResponse.TaxCode ? pars.QueryResponse.TaxCode[0].Id : "5" }
                                     }
                                     callback(line)
                                 }
