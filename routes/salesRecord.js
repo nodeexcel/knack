@@ -199,7 +199,7 @@ router.post('/', function(req, res) {
                             if (err || response.statusCode != 200) {
                                 return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                             } else {
-                                console.log(response..body, "=================================")
+                                console.log(response.body, "=================================")
                                 var pars = (JSON.parse(response.body))
                                 // if (pars.QueryResponse.Invoice && pars.QueryResponse.Invoice.length != 0) {
                                 line.push({
