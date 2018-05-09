@@ -7,6 +7,7 @@ var router = express.Router()
 var moment = require('moment')
 router.post('/', function(req, res) {
     let token;
+    req.body.taxCode = req.body.taxCode.replace(/'/g, "\\\'")
     tools.getRelmId().then((realmId) => {
         tools.getToken().then((fetchedToken) => {
             token = fetchedToken;
