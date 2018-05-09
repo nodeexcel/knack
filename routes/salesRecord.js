@@ -202,6 +202,7 @@ router.post('/', function(req, res) {
                                 console.log(response.body, "=================================")
                                 var pars = (JSON.parse(response.body))
                                 // if (pars.QueryResponse.Invoice && pars.QueryResponse.Invoice.length != 0) {
+                                console.log(pars.QueryResponse.TaxCode.Id, "iddddddddddddddddddddddddddddddddddddddddddddddd")
                                 line.push({
                                     "Amount": sku.field_287_raw,
                                     "DetailType": "SalesItemLineDetail",
