@@ -182,7 +182,7 @@ router.post('/', function(req, res) {
                     console.log(itemref, "ppppppppppppppppppppp")
 
                     var taxCodeQuery = `select * from taxCode  where Name = '` + req.body.taxCode + `'`;
-                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(taxCodeQuery);
+                    var url = config.api_uri + realmId + '/query?query=' + escape(taxCodeQuery);
                     console.log('Making API call to: ' + url)
                     var taxCodeQueryrequestObj = {
                         url: url,
