@@ -18,9 +18,6 @@ router.post('/', function(req, res) {
                 if (!realmId) return res.json({
                     error: 'No realm ID.  QBO calls only work if the accounting scope was passed!'
                 })
-                if (req.body.ParentCustomer) {
-                    console.log("parenttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt")
-                }
                 var data = {
                     "BillAddr": {
                         "Line1": req.body.BillingStreet,
