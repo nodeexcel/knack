@@ -49,6 +49,7 @@ router.post('/', function(req, res) {
                                         // getId.getTermId(req, res, req.body.Terms).then((termref) => {
                                         // Set up API call (with OAuth2 accessToken)
                                         getId.getTermId(req, res, req.body.SalesTermRef).then((terms_data) => {
+                                            console.log(terms_data, "termsssssssssssssssssssssssssssssssssssssssssss")
                                             var url = config.api_uri + realmId + '/invoice?minorversion=14'
                                             console.log('Making API call to: ' + url)
                                             let date = req.body.DueDate.split('/')
@@ -202,7 +203,7 @@ router.post('/', function(req, res) {
                                 console.log(response.body, "=================================")
                                 var pars = (JSON.parse(response.body))
                                 // if (pars.QueryResponse.Invoice && pars.QueryResponse.Invoice.length != 0) {
-                                console.log(pars.QueryResponse.TaxCode.Id, "iddddddddddddddddddddddddddddddddddddddddddddddd")
+                                // console.log(pars.QueryResponse.TaxCode.Id, "iddddddddddddddddddddddddddddddddddddddddddddddd")
                                 line.push({
                                     "Amount": sku.field_287_raw,
                                     "DetailType": "SalesItemLineDetail",
