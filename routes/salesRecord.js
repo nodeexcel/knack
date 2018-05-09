@@ -212,7 +212,7 @@ router.post('/', function(req, res) {
                                             "name": itemref.name
                                         },
                                         "TaxCodeRef": {
-                                            "value": pars.QueryResponse.TaxCode.Id ? pars.QueryResponse.TaxCode.Id : "5"
+                                            "value": pars.QueryResponse.TaxCode[0].Id ? pars.QueryResponse.TaxCode[0].Id : "5"
                                         },
                                         "Qty": sku.field_286_raw,
                                         "UnitPrice": sku.field_285_raw
