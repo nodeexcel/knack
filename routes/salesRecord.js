@@ -78,6 +78,8 @@ router.post('/', function(req, res) {
                                                 "SyncToken": pars.QueryResponse.Invoice[0].SyncToken,
                                                 "MetaData": pars.QueryResponse.Invoice[0].MetaData
                                             }
+                                            console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
+
                                             var requestObj = {
                                                 url: url,
                                                 method: "POST",
