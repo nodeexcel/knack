@@ -47,9 +47,9 @@ router.post('/', function(req, res) {
                     "PrimaryEmailAddr": {
                         "Address": req.body.BillingEmail
                     },
-                    "Mobile": {
-                        "FreeFormNumber": req.body.Contacts
-                    },
+                    // "Mobile": {
+                    //     "FreeFormNumber": req.body.Contacts
+                    // },
                     "WebAddr": {
                         "URI": req.body.WebAddr
                     },
@@ -62,7 +62,7 @@ router.post('/', function(req, res) {
                     data.BillWithParent = true;
                     data.ParentRef = parentref
                 }
-                console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                // console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 getId.getPaymentMethodId(req, res, req.body.PaymentMethod).then((paymentMethodref) => {
                     data.PaymentMethodRef = paymentMethodref;
                     getId.getTermId(req, res, req.body.Terms).then((termref) => {
