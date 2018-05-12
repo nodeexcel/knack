@@ -70,9 +70,9 @@ router.post('/', function(req, res) {
                                                 'ShipDate': moment(req.body.ShipDate).format('YYYY-MM-DD'),
                                                 'TrackingNum': req.body.TrackingNum,
                                                 'CustomField': req.body.CustomField,
-                                                "SalesTermRef": {
-                                                    "value": terms_data.value
-                                                },
+                                                // "SalesTermRef": {
+                                                //     "value": terms_data.value
+                                                // },
                                                 "CustomerMemo": { value: req.body.CustomerMemo },
                                                 "Id": pars.QueryResponse.Invoice[0].Id,
                                                 "SyncToken": pars.QueryResponse.Invoice[0].SyncToken,
