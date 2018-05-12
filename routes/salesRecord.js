@@ -78,6 +78,11 @@ router.post('/', function(req, res) {
                                                 "SyncToken": pars.QueryResponse.Invoice[0].SyncToken,
                                                 "MetaData": pars.QueryResponse.Invoice[0].MetaData
                                             }
+                                            if (terms_data) {
+                                                data['SalesTermRef'] = {
+                                                    "value": terms_data.value
+                                                }
+                                            }
                                             console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
 
                                             var requestObj = {
@@ -141,11 +146,7 @@ router.post('/', function(req, res) {
                                                 // },
                                                 "CustomerMemo": { value: req.body.CustomerMemo }
                                             }
-                                            if (terms_data) {
-                                                data['SalesTermRef'] = {
-                                                    "value": terms_data.value
-                                                }
-                                            }
+
                                             console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
                                             var requestObj = {
                                                 url: url,
