@@ -136,10 +136,15 @@ router.post('/', function(req, res) {
                                                 'ShipDate': moment(req.body.ShipDate).format('YYYY-MM-DD'),
                                                 'TrackingNum': req.body.TrackingNum,
                                                 'CustomField': req.body.CustomField,
-                                                "SalesTermRef": {
-                                                    "value": terms_data.value
-                                                },
+                                                // "SalesTermRef": {
+                                                //     "value": terms_data.value
+                                                // },
                                                 "CustomerMemo": { value: req.body.CustomerMemo }
+                                            }
+                                            if (terms_data) {
+                                                data['SalesTermRef'] = {
+                                                    "value": terms_data.value
+                                                }
                                             }
                                             console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
                                             var requestObj = {
