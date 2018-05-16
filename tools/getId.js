@@ -235,6 +235,7 @@ var account = function() {
                     var query = `select * from customer  where DisplayName = '` + name + `'`;
                     var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
                     console.log('Making API call to: ' + url)
+                    console.log("jkjkjkjkjkjkjkjkj")
                     var requestObj = {
                         url: url,
                         method: "GET",
