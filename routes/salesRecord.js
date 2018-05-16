@@ -79,7 +79,6 @@ router.post('/', function(req, res) {
                                                 "MetaData": pars.QueryResponse.Invoice[0].MetaData
                                             }
                                             if (terms_data) {
-                                                console.log("======================================================================================")
                                                 data['SalesTermRef'] = {
                                                     "value": terms_data.value
                                                 }
@@ -146,6 +145,11 @@ router.post('/', function(req, res) {
                                                 //     "value": terms_data.value
                                                 // },
                                                 "CustomerMemo": { value: req.body.CustomerMemo }
+                                            }
+                                            if (terms_data) {
+                                                data['SalesTermRef'] = {
+                                                    "value": terms_data.value
+                                                }
                                             }
 
                                             console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
