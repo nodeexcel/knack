@@ -79,6 +79,7 @@ router.post('/', function(req, res) {
                                                 "MetaData": pars.QueryResponse.Invoice[0].MetaData
                                             }
                                             if (terms_data) {
+                                                console.log("======================================================================================")
                                                 data['SalesTermRef'] = {
                                                     "value": terms_data.value
                                                 }
