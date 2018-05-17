@@ -223,7 +223,7 @@ var account = function() {
     this.getCustomerId = function(req, res, name) {
         return new Promise(function(resolve, reject) {
             let token;
-            name = name.replace(/&/g, "\\\'")
+            name = name.replace(/&/g, "\\\&")
             tools.getRelmId().then((realmId) => {
                 tools.getToken().then((fetchedToken) => {
                     token = fetchedToken;
@@ -255,7 +255,7 @@ var account = function() {
                             }
                             // API Call was a success!
                             var pars = (JSON.parse(response.body))
-                            console.log(response.body, name, "====================================================customerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                            console.log(response.body, "====================================================customerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
                             if (pars.QueryResponse.Customer) {
                                 resolve({ "value": pars.QueryResponse.Customer[0].Id, "name": pars.QueryResponse.Customer[0].DisplayName })
                             } else {
