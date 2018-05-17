@@ -223,7 +223,7 @@ var account = function() {
     this.getCustomerId = function(req, res, name) {
         return new Promise(function(resolve, reject) {
             let token;
-            name = name.replace(/&/g, "\\\&")
+            // name = name.replace(/&/g, "\\\&")
             tools.getRelmId().then((realmId) => {
                 tools.getToken().then((fetchedToken) => {
                     token = fetchedToken;
@@ -235,7 +235,7 @@ var account = function() {
                     var query = `select * from customer where DisplayName = '` + name + `'`;
                     var url = config.api_uri + realmId + '/query?query=' + escape(query);
                     console.log('Making API call to: ' + url)
-                    console.log("jkjkjkjkjkjkjkjkj")
+                    console.log("jkjkjkjkjkjkjkjkj", query)
                     var requestObj = {
                         url: url,
                         method: "GET",
