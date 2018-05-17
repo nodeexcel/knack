@@ -255,7 +255,7 @@ var account = function() {
                             }
                             // API Call was a success!
                             var pars = (JSON.parse(response.body))
-                            console.log(response.body, name "====================================================customerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                            console.log(response.body, name, "====================================================customerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
                             if (pars.QueryResponse.Customer) {
                                 resolve({ "value": pars.QueryResponse.Customer[0].Id, "name": pars.QueryResponse.Customer[0].DisplayName })
                             } else {
