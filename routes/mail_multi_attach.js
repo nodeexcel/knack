@@ -57,7 +57,7 @@ router.post('/', function(req, res) {
                 response.pipe(file);
                 attachments.push(file)
                 if (body.attachments.length) {
-                    attachments(body, callback)
+                    getAttachments(body, callback)
                 } else {
                     callback(attachments)
                 }
