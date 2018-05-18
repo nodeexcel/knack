@@ -48,23 +48,43 @@ router.post('/', function(req, res) {
         });
     })
 
-    function getAttachments(body, callback) {
-        let attachments = [];
+    function findQuestionByGroup(body, callback) {
+        let attachments = []
         if (body.attachments.length != 0) {
-            _.forEach(body.attachments, (val, key) => {
-                var file = fs.createWriteStream(val.name);
-                var request = https.get(val.fileLink, function(response) {
-                    response.pipe(file);
-                    attachments.push(file)
-                    if (attachments.length == body.attachments.length) {
-                        callback(attachments)
-                    }
-                })
-            });
+            let invoice = body.attachments.splice(0, 1)[0];
+            var file = fs.createWriteStream(invoice.name);
+            var request = https.get(invoice.fileLink, function(response) {
+                response.pipe(file);
+                attachments.push(file)
+                if (body.attachments.length) {
+                    attachments(body, callback)
+                } else {
+                    callback(attachments)
+                }
+            })
         } else {
             callback(attachments)
         }
     }
+
+
+    // function getAttachments(body, callback) {
+    //     let attachments = [];
+    //     if (body.attachments.length != 0) {
+    //         _.forEach(body.attachments, (val, key) => {
+    //             var file = fs.createWriteStream(val.name);
+    //             var request = https.get(val.fileLink, function(response) {
+    //                 response.pipe(file);
+    //                 attachments.push(file)
+    //                 if (attachments.length == body.attachments.length) {
+    //                     callback(attachments)
+    //                 }
+    //             })
+    //         });
+    //     } else {
+    //         callback(attachments)
+    //     }
+    // }
 })
 
 module.exports = router
