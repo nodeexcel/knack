@@ -12,8 +12,9 @@ var config = require('../config.json');
 
 router.post('/', function(req, res) {
     console.log(JSON.stringify(req.body), "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+    let attachments = []
 
-    getAttachments(req.body, function(attach) {
+    getAttachments(req.body, attachments, function(attach) {
         let mailer = nodemailer.createTransport(smtpTransport({
             host: 'smtp.sendgrid.net',
             port: 465,
@@ -48,8 +49,7 @@ router.post('/', function(req, res) {
         });
     })
 
-    function getAttachments(body, callback) {
-        let attachments = []
+    function getAttachments(body, attachments, callback) {
         console.log("length")
         if (body.attachments.length != 0) {
             let invoice = body.attachments.splice(0, 1)[0];
@@ -58,7 +58,7 @@ router.post('/', function(req, res) {
                 response.pipe(file);
                 attachments.push(file)
                 if (body.attachments.length) {
-                    getAttachments(body, callback)
+                    getAttachments(body, attachments, callback)
                 } else {
                     callback(attachments)
                 }
