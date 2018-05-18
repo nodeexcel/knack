@@ -11,6 +11,8 @@ var _ = require('lodash')
 var config = require('../config.json');
 
 router.post('/', function(req, res) {
+    console.log(JSON.stringify(req.body), "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+
     getAttachments(req.body, function(attach) {
         let mailer = nodemailer.createTransport(smtpTransport({
             host: 'smtp.sendgrid.net',

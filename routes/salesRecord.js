@@ -6,7 +6,6 @@ var express = require('express')
 var router = express.Router()
 var moment = require('moment')
 router.post('/', function(req, res) {
-    console.log(JSON.stringify(req.body), "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
     let token;
     req.body.taxCode = req.body.taxCode.replace(/'/g, "\\\'")
     tools.getRelmId().then((realmId) => {
@@ -50,7 +49,6 @@ router.post('/', function(req, res) {
                                         // getId.getTermId(req, res, req.body.Terms).then((termref) => {
                                         // Set up API call (with OAuth2 accessToken)
                                         getId.getTermId(req, res, req.body.SalesTermRef).then((terms_data) => {
-                                            console.log(terms_data, "termsssssssssssssssssssssssssssssssssssssssssss")
                                             var url = config.api_uri + realmId + '/invoice?minorversion=14'
                                             console.log('Making API call to: ' + url)
                                             let date = req.body.DueDate.split('/')
@@ -83,7 +81,6 @@ router.post('/', function(req, res) {
                                                     "value": terms_data.value
                                                 }
                                             }
-                                            console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
 
                                             var requestObj = {
                                                 url: url,
@@ -93,7 +90,6 @@ router.post('/', function(req, res) {
                                                     'Authorization': 'Bearer ' + token.accessToken
                                                 }
                                             }
-                                            console.log(data, "data hai")
                                             // Make API call
                                             request(requestObj, function(err, response) {
                                                 // Check if 401 response was returned - refresh tokens if so!
@@ -152,7 +148,6 @@ router.post('/', function(req, res) {
                                                 }
                                             }
 
-                                            console.log("======================", data, "lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll")
                                             var requestObj = {
                                                 url: url,
                                                 method: "POST",
@@ -194,7 +189,6 @@ router.post('/', function(req, res) {
             function findInventory(inventory, callback) {
                 let sku = inventory.splice(0, 1)[0]
                 getId.ItemId(req, res, sku.field_281_raw[0].identifier).then((itemref) => {
-                    console.log(itemref, "ppppppppppppppppppppp")
 
                     var taxCodeQuery = `select * from taxCode  where Name = '` + req.body.taxCode + `'`;
                     var url = config.api_uri + realmId + '/query?query=' + escape(taxCodeQuery);
@@ -214,7 +208,6 @@ router.post('/', function(req, res) {
                             if (err || response.statusCode != 200) {
                                 return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                             } else {
-                                console.log(response.body, "=================================")
                                 var pars = (JSON.parse(response.body))
                                 // if (pars.QueryResponse.Invoice && pars.QueryResponse.Invoice.length != 0) {
                                 // console.log(pars.QueryResponse.TaxCode.Id, "iddddddddddddddddddddddddddddddddddddddddddddddd")
