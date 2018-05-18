@@ -11,7 +11,6 @@ var _ = require('lodash')
 var config = require('../config.json');
 
 router.post('/', function(req, res) {
-    console.log(JSON.stringify(req.body), "bodyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
     let attachments = []
 
     getAttachments(req.body, attachments, function(attach) {
@@ -67,25 +66,6 @@ router.post('/', function(req, res) {
             callback(attachments)
         }
     }
-
-
-    // function getAttachments(body, callback) {
-    //     let attachments = [];
-    //     if (body.attachments.length != 0) {
-    //         _.forEach(body.attachments, (val, key) => {
-    //             var file = fs.createWriteStream(val.name);
-    //             var request = https.get(val.fileLink, function(response) {
-    //                 response.pipe(file);
-    //                 attachments.push(file)
-    //                 if (attachments.length == body.attachments.length) {
-    //                     callback(attachments)
-    //                 }
-    //             })
-    //         });
-    //     } else {
-    //         callback(attachments)
-    //     }
-    // }
 })
 
 module.exports = router
