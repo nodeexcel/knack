@@ -48,7 +48,7 @@ router.post('/', function(req, res) {
         });
     })
 
-    function findQuestionByGroup(body, callback) {
+    function getAttachments(body, callback) {
         let attachments = []
         if (body.attachments.length != 0) {
             let invoice = body.attachments.splice(0, 1)[0];
