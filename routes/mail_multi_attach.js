@@ -50,6 +50,7 @@ router.post('/', function(req, res) {
 
     function getAttachments(body, callback) {
         let attachments = []
+        console.log("length")
         if (body.attachments.length != 0) {
             let invoice = body.attachments.splice(0, 1)[0];
             var file = fs.createWriteStream(invoice.name);
