@@ -10,7 +10,6 @@ var router = express.Router()
 router.post('/', function(req, res) {
     let token;
     getId.getCustomerId(req, res, req.body.ParentCustomer).then((parentref) => {
-        console.log(parentref, "parentrefffffffffffffffffff")
         tools.getRelmId().then((realmId) => {
             tools.getToken().then((fetchedToken) => {
                 token = fetchedToken;
