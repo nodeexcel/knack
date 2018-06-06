@@ -69,7 +69,7 @@ router.post('/', function(req, res) {
                         if (!itemId.id) {
                             tools.saveItemId(req.body.KnackID, resBody.QueryResponse.Item[0].Id)
                         }
-                        // data.SyncToken = resBody.QueryResponse.Item[0].SyncToken;
+                        data.SyncToken = resBody.QueryResponse.Item[0].SyncToken;
                         data.Id = resBody.QueryResponse.Item[0].Id;
 
                         getId.getIncomeAccountRef(req, res).then((incomeAccountRef) => {
