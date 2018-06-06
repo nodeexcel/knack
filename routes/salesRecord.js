@@ -81,6 +81,7 @@ router.post('/', function(req, res) {
                                                     "value": terms_data.value
                                                 }
                                             }
+                                            console.log(data, "===============")
 
                                             var requestObj = {
                                                 url: url,
@@ -147,7 +148,7 @@ router.post('/', function(req, res) {
                                                     "value": terms_data.value
                                                 }
                                             }
-
+                                            console.log(data, "===============")
                                             var requestObj = {
                                                 url: url,
                                                 method: "POST",
