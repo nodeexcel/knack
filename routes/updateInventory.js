@@ -19,7 +19,6 @@ router.post('/', function(req, res) {
             })
             // Set up API call (with OAuth2 accessToken)
             tools.fetchItemId(req.body.KnackID, req.body.Name).then((itemId) => {
-                console.log(itemId, "data=============================")
                 if (itemId.id)
                     var query = `select * from Item  where Id = '` + itemId.id + `'`;
                 else
@@ -65,7 +64,6 @@ router.post('/', function(req, res) {
                             "UnitPrice": req.body.UnitPrice,
                             "PurchaseDesc": req.body.PurchaseDesc
                         };
-
                         let resBody = (JSON.parse(response.body))
                         console.log(resBody.QueryResponse, "pppppppppppppppppppppppppppppppppppppppppppppppp")
                         if (!itemId.id) {
@@ -83,7 +81,7 @@ router.post('/', function(req, res) {
 
                                     var url = config.api_uri + realmId + '/item?operation=update'
                                     console.log('Making API call to: ' + url)
-                                    console.log(data)
+                                    console.log(data, "klkkllklklklkklklklkkl")
                                     var requestObj = {
                                         url: url,
                                         method: "POST",
