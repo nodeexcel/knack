@@ -33,7 +33,7 @@ router.post('/', function(req, res) {
             if (req.body.attachments.length != 0) {
                 _.forEach(attach, (val, key) => {
                     console.log(val,"kkkkkkkkkkkkkkkkkkkkkkkkkkkk")
-                    fs.unlink(val.name, function(err) {
+                    fs.unlink(val, function(err) {
                         if (err) {
                             console.log(err)
                         }
