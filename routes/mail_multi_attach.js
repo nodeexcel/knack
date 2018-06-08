@@ -13,6 +13,7 @@ var config = require('../config.json');
 router.post('/', function(req, res) {
     let attachments = []
     let deleteFiles = req.body.attachments;
+    console.log(deleteFiles,"================")
     getAttachments(req.body, attachments, function(attach) {
         let mailer = nodemailer.createTransport(smtpTransport({
             host: 'smtp.sendgrid.net',
