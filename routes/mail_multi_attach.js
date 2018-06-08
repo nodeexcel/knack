@@ -12,10 +12,7 @@ var config = require('../config.json');
 
 router.post('/', function(req, res) {
     let attachments = []
-    let deleteFiles = req.body.attachments;
-    // console.log(deleteFiles, "================")
     getAttachments(req.body, attachments, function(attach) {
-        // console.log(attach,"===================================")
         let mailer = nodemailer.createTransport(smtpTransport({
             host: 'smtp.sendgrid.net',
             port: 465,
@@ -32,10 +29,9 @@ router.post('/', function(req, res) {
             attachments: attach,
             cc: req.body.cc
         }, (error, response) => {
-            console.log(attach,"attachhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh")
             if (attach.length != 0) {
                 _.forEach(attach, (val, key) => {
-                    console .log(val, "kkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+                    console .log(val.path, "kkkkkkkkkkkkkkkkkkkkkkkkkkkk")
                     fs.unlink(val.path, function(err) {
                         if (err) {
                             console.log(err)
