@@ -30,7 +30,7 @@ router.post('/', function(req, res) {
             attachments: attach,
             cc: req.body.cc
         }, (error, response) => {
-            if (req.body.attachments.length != 0) {
+            if (attach != 0) {
                 _.forEach(attach, (val, key) => {
                     console.log(val,"kkkkkkkkkkkkkkkkkkkkkkkkkkkk")
                     fs.unlink(val, function(err) {
