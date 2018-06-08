@@ -55,12 +55,15 @@ router.post('/', function(req, res) {
             var file = fs.createWriteStream(invoice.name);
             var request = https.get(invoice.fileLink, function(response) {
                 response.pipe(file);
-                attachments.push(file)
-                if (body.attachments.length) {
-                    getAttachments(body, attachments, callback)
-                } else {
-                    callback(attachments)
-                }
+                file.on('finish', function() {
+                    attachments.push(file)
+                    if (body.attachments.length) {
+                        getAttachments(body, attachments, callback)
+                    } else {
+                        callback(attachments)
+                    }
+                });
+
             })
         } else {
             callback(attachments)
