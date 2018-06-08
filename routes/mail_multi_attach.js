@@ -32,11 +32,10 @@ router.post('/', function(req, res) {
             attachments: attach,
             cc: req.body.cc
         }, (error, response) => {
-            console.log(deleteFiles)
-            if (deleteFiles.length != 0) {
-                _.forEach(deleteFiles, (val, key) => {
+            if (attach.length != 0) {
+                _.forEach(attach, (val, key) => {
                     // console.log(val, "kkkkkkkkkkkkkkkkkkkkkkkkkkkk")
-                    fs.unlink(val.name, function(err) {
+                    fs.unlink(val.path, function(err) {
                         if (err) {
                             console.log(err)
                         }
