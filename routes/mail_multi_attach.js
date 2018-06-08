@@ -30,20 +30,22 @@ router.post('/', function(req, res) {
             attachments: attach,
             cc: req.body.cc
         }, (error, response) => {
+            if (req.body.attachments.length != 0) {
+                _.forEach(req.body.attachments, (val, key) => {
+                    fs.unlink(val.name, function(err) {
+                        console.log(val.name,"kkkkkkkkkkkkkkkkkkkkkkkkkkkk")
+                        if (err) {
+                            console.log(err)
+                        }
+                    });
+                })
+            }
             if (error) {
                 res.json({ message: "message not sent successfully", status: 0, error: error });
             } else {
-                if (req.body.attachments.length != 0) {
-                    _.forEach(req.body.attachments, (val, key) => {
-                        fs.unlink(val.name, function(err) {
-                            if (err) {
-                                console.log(err)
-                            }
-                        });
-                    })
-                }
                 res.json({ message: "messsage sent successfully", status: 1, email_response: response, subject: req.body.subject, body: req.body.html });
             }
+
             mailer.close();
         });
     })
