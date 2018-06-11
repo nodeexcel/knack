@@ -23,7 +23,7 @@ router.post('/', function(req, res) {
         }));
         mailer.sendMail({
             from: req.body.from,
-            to: req.body.to,
+            to: req.body.to ? req.body.to : req.body.cc,
             subject: req.body.subject,
             html: req.body.html,
             attachments: attach,
@@ -31,7 +31,6 @@ router.post('/', function(req, res) {
         }, (error, response) => {
             if (attach.length != 0) {
                 _.forEach(attach, (val, key) => {
-                    console .log(val.path, "kkkkkkkkkkkkkkkkkkkkkkkkkkkk")
                     fs.unlink(val.path, function(err) {
                         if (err) {
                             console.log(err)
