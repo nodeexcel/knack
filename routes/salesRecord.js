@@ -1,4 +1,4 @@
-qvar tools = require('../tools/tools.js')
+var tools = require('../tools/tools.js')
 var getId = require('../tools/getId.js')
 var config = require('../config.json')
 var request = require('request')
