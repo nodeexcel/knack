@@ -220,9 +220,9 @@ router.post('/', function(req, res) {
                                             "value": itemref.value,
                                             "name": itemref.name
                                         },
-                                        // "TaxCodeRef": {
-                                        //     "value": pars.QueryResponse.TaxCode ? pars.QueryResponse.TaxCode[0].Id : "5"
-                                        // },
+                                        "TaxCodeRef": {
+                                            "value": pars.QueryResponse.TaxCode ? pars.QueryResponse.TaxCode[0].Id : "5"
+                                        },
                                         "Qty": sku.field_286_raw,
                                         "UnitPrice": sku.field_285_raw
                                     },
