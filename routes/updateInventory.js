@@ -65,7 +65,7 @@ router.post('/', function(req, res) {
                             "PurchaseDesc": req.body.PurchaseDesc
                         };
                         let resBody = (JSON.parse(response.body))
-                        console.log(resBody.QueryResponse, "pppppppppppppppppppppppppppppppppppppppppppppppp")
+                        console.log(response.headers, "pppppppppppppppppppppppppppppppppppppppppppppppp")
                         if (!itemId.id) {
                             tools.saveItemId(req.body.KnackID, resBody.QueryResponse.Item[0].Id)
                         }
