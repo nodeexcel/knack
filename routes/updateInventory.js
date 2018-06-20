@@ -99,6 +99,7 @@ router.post('/', function(req, res) {
                                                 return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                                             }
                                             // API Call was a success!
+                                            console.log("====================", response, "=============================")
                                             res.json(response.body)
                                         }, function(err) {
                                             return res.json(err)
