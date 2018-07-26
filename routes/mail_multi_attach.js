@@ -27,7 +27,8 @@ router.post('/', function(req, res) {
             subject: req.body.subject,
             html: req.body.html,
             attachments: attach,
-            cc: req.body.cc
+            cc: req.body.cc,
+            bcc:req.body.bcc
         }, (error, response) => {
             if (attach.length != 0) {
                 _.forEach(attach, (val, key) => {

@@ -31,7 +31,8 @@ router.post('/', function(req, res) {
         subject: req.body.subject,
         html: req.body.html,
         attachments: attachments,
-        cc: req.body.cc
+        cc: req.body.cc,
+        bcc:req.body.bcc
     }, (error, response) => {
         if (error) {
             res.json({ message: "message not sent successfully", status: 0, error: error });
