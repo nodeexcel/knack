@@ -190,6 +190,7 @@ router.post('/', function(req, res) {
             function findInventory(inventory, callback) {
                 let sku = inventory.splice(0, 1)[0]
                 getId.ItemId(req, res, sku.field_281_raw[0].identifier).then((itemref) => {
+                    console.log(itemref,"ppppppppppppppppppppppppppppppppppppppppppppppp")
 
                     var taxCodeQuery = `select * from taxCode  where Name = '` + req.body.taxCode + `'`;
                     var url = config.api_uri + realmId + '/query?query=' + escape(taxCodeQuery);
