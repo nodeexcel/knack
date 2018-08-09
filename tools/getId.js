@@ -285,6 +285,7 @@ var account = function() {
                     })
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from item  where Name = '` + name + `'`;
+                    console.log(query,"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
                     var url = config.api_uri + realmId + '/query?query=' + escape(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
@@ -299,7 +300,6 @@ var account = function() {
 
                     // Make API call
                     request(requestObj, function(err, response) {
-                        console.log(response,err,response.body,"itemmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
                         // Check if 401 response was returned - refresh tokens if so!
                         tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                             if (err || response.statusCode != 200) {
