@@ -259,8 +259,8 @@ var account = function() {
                             if (pars.QueryResponse.Customer) {
                                 resolve({ "value": pars.QueryResponse.Customer[0].Id, "name": pars.QueryResponse.Customer[0].DisplayName })
                             } else {
-                                console.log("Customer not found");
-                                resolve()
+                               return res.send({message: "Customer not found"});
+                                // resolve()
                             }
                         }, function(err) {
                             return res.json(err)
