@@ -8,7 +8,9 @@ var router = express.Router()
 
 
 router.post('/', function(req, res) {
-    getId.getCustomerId(req, res, req.body.ParentCustomer).then((parentref) => {
+    let customer_name = (req.body && req.body.ParentCustomer) ? req.body.ParentCustomer : req.body.DisplayName;
+    console.log(customer_name, "customer_namecustomer_namecustomer_namecustomer_namecustomer_name");    
+    getId.getCustomerId(req, res, customer_name).then((parentref) => {
         console.log(parentref, "parentrefffffffffffffffffff")
         let token;
         tools.getRelmId().then((realmId) => {
