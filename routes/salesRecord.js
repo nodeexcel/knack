@@ -113,6 +113,7 @@ router.post('/', function(req, res) {
                             }).catch(err => console.log(err))
                         } else {
                             getId.getCustomerId(req, res, req.body.customer).then((customerref) => {
+                                console.log("++++++++++++++++++++++", customerref)
                                 var inventory = req.body.inventory;
                                 findInventory(inventory, function(response_item) {
                                     getId.ItemId(req, res, req.body.SKU).then((itemref) => {
