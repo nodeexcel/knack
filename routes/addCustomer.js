@@ -87,7 +87,7 @@ router.post('/', function(req, res) {
                         console.log(JSON.stringify(requestObj), "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                         request(requestObj, function(err, response) {
                             // Check if 401 response was returned - refresh tokens if so!
-                            console.log(err, response,'@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+                            console.log(err, JSON.stringify(response),'@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
                             tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                                 console.log(JSON.stringify(response))
                                 if (err || response.statusCode != 200) {
