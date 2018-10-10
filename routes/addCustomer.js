@@ -84,6 +84,7 @@ router.post('/', function(req, res) {
                         }
 
                         // Make API call
+                        console.log(JSON.stringify(requestObj), "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                         request(requestObj, function(err, response) {
                             // Check if 401 response was returned - refresh tokens if so!
                             console.log(err, response,'@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
@@ -91,7 +92,7 @@ router.post('/', function(req, res) {
                                 console.log(JSON.stringify(response))
                                 if (err || response.statusCode != 200) {
                                     console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                                    return res.json({ error: err, statusCode: response.statusCode, response: response.body })
+                                    res.json({ error: err, statusCode: response.statusCode, response: response.body })
                                 }
                                 console.log("")
                                 // API Call was a success!
