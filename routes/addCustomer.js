@@ -64,10 +64,12 @@ router.post('/', function(req, res) {
                     data.BillWithParent = true;
                     data.ParentRef = parentref
                 }
-                // console.log(data, "dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
                 getId.getPaymentMethodId(req, res, req.body.PaymentMethod).then((paymentMethodref) => {
                     data.PaymentMethodRef = paymentMethodref;
+                    console.log("=========================================================")
                     getId.getTermId(req, res, req.body.Terms).then((termref) => {
+                        console.log("=========================================================", 2222222222222222)
                         data.SalesTermRef = termref;
                         // Set up API call (with OAuth2 accessToken)
                         var url = config.api_uri + realmId + '/customer?minorversion=14'
