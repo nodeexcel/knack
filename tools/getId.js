@@ -240,7 +240,7 @@ var account = function() {
                         url = config.api_uri + realmId + '/query?query=' + escape(query);
                     }
                     // var url = config.api_uri + realmId + '/query?query=' + escape(query);
-                    console.log('Making API call to: ' + url)
+                    // console.log('Making API call to: ' + url)
                     console.log("jkjkjkjkjkjkjkjkj", query)
                     var requestObj = {
                         url: url,
