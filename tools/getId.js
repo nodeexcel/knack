@@ -233,8 +233,13 @@ var account = function() {
                     })
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from customer where DisplayName = '` + name.trim() + `'`;
+                    var url;
+                    if(name.trim()=='Lighting Innovation + Design Inc.'){
+                        url = "https://quickbooks.api.intuit.com/v3/company/1172106815/query?query=select%20%2a%20from%20customer%20where%20DisplayName%20%3d%20%27Lighting%20Innovation%20%2b%20Design%20Inc.%27&minorversion=4";
+                    }else{
+                        url = config.api_uri + realmId + '/query?query=' + escape(query);
+                    }
                     // var url = config.api_uri + realmId + '/query?query=' + escape(query);
-                    var url = "https://quickbooks.api.intuit.com/v3/company/1172106815/query?query=select%20%2a%20from%20customer%20where%20DisplayName%20%3d%20%27Lighting%20Innovation%20%2b%20Design%20Inc.%27&minorversion=4";
                     console.log('Making API call to: ' + url)
                     console.log("jkjkjkjkjkjkjkjkj", query)
                     var requestObj = {
