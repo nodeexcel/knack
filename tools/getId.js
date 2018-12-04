@@ -294,7 +294,7 @@ var account = function() {
                     var query = `select * from item where Name = '${name}'`;
                     console.log(query,"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
                     // query=qs.escape(query);
-                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
+                    var url = config.api_uri + realmId + '/query?query=' + escape(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
