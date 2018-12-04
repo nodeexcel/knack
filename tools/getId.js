@@ -3,7 +3,7 @@ var config = require('../config.json')
 var request = require('request')
 var express = require('express')
 var router = express.Router()
-
+var qs = require('querystring');
 
 var account = function() {
     let account = this;
@@ -292,8 +292,9 @@ var account = function() {
                     // Set up API call (with OAuth2 accessToken)
                     var query = `select * from item  where Name = '` + name + `'`;
                     console.log(query,"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
-                    var url = config.api_uri + realmId + '/query?query=' + escape(query);
-                    // console.log('Making API call to: ' + url)
+                    query=qs.escape(query);
+                    var url = config.api_uri + realmId + '/query?query=' + query;
+                    console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
                         method: "GET",
