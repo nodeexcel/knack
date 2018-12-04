@@ -293,7 +293,7 @@ var account = function() {
                     var query = `select * from item  where Name = '` + name + `'`;
                     console.log(query,"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
                     var url = config.api_uri + realmId + '/query?query=' + escape(query);
-                    console.log('Making API call to: ' + url)
+                    // console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
                         method: "GET",
@@ -312,6 +312,7 @@ var account = function() {
                                 return res.json({ error: err, statusCode: response.statusCode, error: response.body })
                             }
                             // API Call was a success!
+                            console.log(response.body,"responseeeeeeeeeeeeeeeeeeeeeeeeeeeee")
                             var pars = (JSON.parse(response.body))
                             if (pars.QueryResponse.Item) {
                                 resolve({ "value": pars.QueryResponse.Item[0].Id, "name": pars.QueryResponse.Item[0].Name })
