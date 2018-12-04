@@ -237,6 +237,7 @@ var account = function() {
                     if(name.trim()=='Lighting Innovation + Design Inc.'){
                         url = "https://quickbooks.api.intuit.com/v3/company/1172106815/query?query=select%20%2a%20from%20customer%20where%20DisplayName%20%3d%20%27Lighting%20Innovation%20%2b%20Design%20Inc.%27&minorversion=4";
                     }else{
+
                         url = config.api_uri + realmId + '/query?query=' + escape(query);
                     }
                     // var url = config.api_uri + realmId + '/query?query=' + escape(query);
@@ -254,7 +255,7 @@ var account = function() {
 
                     // Make API call
                     request(requestObj, function(err, response) {
-                        console.log(err,"errorrrrrrr",response.body, "====================================================customerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                        console.log(err,"errorrrrrrr",response.body, "====================================================customerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",response.statusCode)
                         // Check if 401 response was returned - refresh tokens if so!
                         tools.checkForUnauthorized(req, requestObj, err, response).then(function({ err, response }) {
                             if (err || response.statusCode != 200) {
@@ -293,7 +294,7 @@ var account = function() {
                     var query = `select * from item  where Name = '` + name + `'`;
                     console.log(query,"jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj")
                     // query=qs.escape(query);
-                    var url = config.api_uri + realmId + '/query?query=' + encodeURI(query);
+                    var url = config.api_uri + realmId + '/query?query=' + escape(query);
                     console.log('Making API call to: ' + url)
                     var requestObj = {
                         url: url,
