@@ -10,7 +10,9 @@ var fs = require('fs');
 var http = require('http');
 var cron = require('./tools/cronjob.js')
 
-//var routes = require('./routes/auth.js')(app)
+global.__basedir = __dirname;
+
+var routes = require('./routes/auth.js')(app)
 var privateKey = fs.readFileSync('./s166-62-92-227.secureserver.net.key', 'utf8');
 var certificate = fs.readFileSync('./s166-62-92-227.secureserver.net.crt', 'utf8');
 
@@ -21,9 +23,17 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(session({ secret: 'secret', resave: 'false', saveUninitialized: 'false' }))
 app.use(cors());
 // Initial view - loads Connect To QuickBooks Button
-app.get('/', function(req, res) {
+app.get('/', function (req, res) {
     res.render('home', config)
 })
+
+app.get('/upload', function (req, res) {
+    res.render('index', { fileName: req.query.filepath || null })
+})
+
+// app.get('/download', function (req, res) {
+//     res.render('downloadfile')
+// })
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -54,7 +64,8 @@ app.use('/isAuthenticated', require('./routes/tokenAuthentication.js'))
 app.use('/salesRecord', require('./routes/salesRecord.js'))
 app.use('/sendMail', require('./routes/send_mail.js'))
 app.use('/mailMultipleAttach', require('./routes/mail_multi_attach.js'))
-
+app.use('/nppes', require('./routes/nppes'))
+app.use('/merge', require('./routes/merge_file'))
 // Callback - called via redirect_uri after authorization
 app.use('/callback', require('./routes/callback.js'))
 
@@ -68,9 +79,9 @@ app.use('/api_call', require('./routes/api_call.js'))
 // Start server on HTTP (will use ngrok for HTTPS forwarding)
 let server = https.createServer(credentials, app)
 let httpServer = http.createServer(app);
-httpServer.listen(9000, function() {
+httpServer.listen(9000, function () {
     console.log("Http is listening on port", 9000)
-})
+}).timeout = 240000
 server.listen(process.env.PORT || 3000, function() {
     console.log('Example app listening on port', process.env.PORT || 3000)
-})
+}).timeout = 240000
