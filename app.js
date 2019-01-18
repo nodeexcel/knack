@@ -65,7 +65,6 @@ app.use('/salesRecord', require('./routes/salesRecord.js'))
 app.use('/sendMail', require('./routes/send_mail.js'))
 app.use('/mailMultipleAttach', require('./routes/mail_multi_attach.js'))
 app.use('/nppes', require('./routes/nppes'))
-app.use('/merge', require('./routes/merge_file'))
 // Callback - called via redirect_uri after authorization
 app.use('/callback', require('./routes/callback.js'))
 
