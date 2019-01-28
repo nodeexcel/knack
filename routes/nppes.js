@@ -28,9 +28,9 @@ router.post('/updatefiles', upload.array("uploadfiles", 12), async (req, res) =>
     }
     /* Check the extension of the incoming files to use appropriate module */
     if (req.files.length == 2) {
-        if (path.extname(req.files[0].originalname) && path.extname(req.files[1].originalname) == '.xlsx') {
+        if ((path.extname(req.files[0].originalname) == '.xlsx') && (path.extname(req.files[1].originalname) == '.xlsx')) {
             exceltojson = xlsxtojson;
-        } else if (path.extname(req.files[0].originalname) && path.extname(req.files[1].originalname) == '.xls') {
+        } else if ((path.extname(req.files[0].originalname) == '.xls') && (path.extname(req.files[1].originalname) == '.xls')) {
             exceltojson = xlstojson;
         } else {
             res.redirect(`/upload?error=Wrong file type passed`)
