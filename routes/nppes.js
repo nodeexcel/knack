@@ -160,8 +160,14 @@ router.post('/updatefiles', upload.array("uploadfiles", 12), async (req, res) =>
                 if (!secondFile.Recipient) {
                     return res.redirect(`/upload?error=file is not right`);
                 }
-                let recipents = secondFile['Recipient'].split("&#10;");
-                let products = secondFile['Product'].split("&#10;").join(',').replace(/\,/g, ", ");
+                let recipents, products;
+                if (secondFile['Recipient'].indexOf('&#10;') > -1) {
+                    recipents = secondFile['Recipient'].split("&#10;");
+                    products = secondFile['Product'].split("&#10;").join(',').replace(/\,/g, ", ");
+                } else {
+                    recipents = secondFile['Recipient'].split("\r\n");
+                    products = secondFile['Product'].split("\r\n").join(',').replace(/\,/g, ", ");
+                }
                 let newFileArr = [];
                 if (recipents.length > 1) {
                     recipents.map((recipent) => {
