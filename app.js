@@ -28,7 +28,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/upload', function (req, res) {
-    res.render('index', { fileName: req.query.filepath || null })
+    res.render('index', { fileName: req.query.filepath || null, error: req.query.error || null })
 })
 
 // app.get('/download', function (req, res) {
