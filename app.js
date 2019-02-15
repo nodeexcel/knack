@@ -80,7 +80,7 @@ let server = https.createServer(credentials, app)
 let httpServer = http.createServer(app);
 httpServer.listen(9000, function () {
     console.log("Http is listening on port", 9000)
-}).timeout = 240000
+}).timeout = 1000000
 server.listen(process.env.PORT || 3000, function() {
     console.log('Example app listening on port', process.env.PORT || 3000)
-}).timeout = 240000
+}).timeout = 1000000
