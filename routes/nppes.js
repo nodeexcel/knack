@@ -70,7 +70,7 @@ router.post('/updatefiles', upload.array("uploadfiles", 12), async (req, res) =>
                     })
                     if (result[0].Recipient) {
                         secondFiles = result;
-                    } else if (result[0].NPI) {
+                    } else if (result[0].NPI || result[0].NPI == '') {
                         secondFiles = result;
                     } else {
                         firstFiles = result;
@@ -83,7 +83,6 @@ router.post('/updatefiles', upload.array("uploadfiles", 12), async (req, res) =>
                                 return
                             } else {
                                 dataHandler(firstFiles, secondFiles, req, allData, async (finalData) => {
-                                    // console.log(finalData, '111111111111111111111')
                                     await jsonToExcel(finalData, req)
                                     res.redirect(`/upload?filepath=${'mergesheetjs.xlsx'}`)
                                     /* Removing files from uploads folder */
@@ -105,7 +104,6 @@ router.post('/updatefiles', upload.array("uploadfiles", 12), async (req, res) =>
                             return
                         } else {
                             dataHandler(firstFiles, secondFiles, req, allData, async (finalData) => {
-                                // console.log(finalData, '00000000000000000000000000000000000')
                                 await jsonToExcel(finalData, req)
                                 res.redirect(`/upload?filepath=${'updatesheetjs.xlsx'}`)
                                 /* Removing files from uploads folder */
@@ -155,11 +153,8 @@ router.post('/updatefiles', upload.array("uploadfiles", 12), async (req, res) =>
         if (secondFiles.length) {
             let firstFile = firstFiles.splice(0, 1)[0];
             let secondFile = secondFiles.splice(0, 1)[0];
-            if (!secondFile.NPI) {
+            if (secondFile.Recipient) {
                 //for Spend many Recipients file
-                if (!secondFile.Recipient) {
-                    return res.redirect(`/upload?error=file is not right`);
-                }
                 let recipents, products;
                 if (secondFile['Recipient'].indexOf('&#10;') > -1) {
                     recipents = secondFile['Recipient'].split("&#10;");
@@ -183,6 +178,8 @@ router.post('/updatefiles', upload.array("uploadfiles", 12), async (req, res) =>
                         })
                         newFileArr.push(newFile);
                     })
+                } else {
+                    newFileArr.push(secondFile);
                 }
                 allData.push(...newFileArr);
                 if (secondFiles.length) {
@@ -191,6 +188,9 @@ router.post('/updatefiles', upload.array("uploadfiles", 12), async (req, res) =>
                     cb(allData);
                 }
             } else {
+                if (!secondFile.NPI && !secondFile.NPI == "") {
+                    return res.redirect(`/upload?error=file is not right`);
+                }
                 // console.log(secondFile.NPI, '*****************')
                 request.get(`https://npiregistry.cms.hhs.gov/api/?number=${secondFile.NPI}`,
                     async function (error, response, body) {
@@ -200,37 +200,39 @@ router.post('/updatefiles', upload.array("uploadfiles", 12), async (req, res) =>
                         }
                         if (response.statusCode == 200) {
                             let jsonBody = JSON.parse(body);
-                            let taxonomiesResults = jsonBody.results[0].taxonomies;
-                            await taxonomiesResults.map(async (taxonomiesResult, index) => {
-                                await Object.keys(taxonomiesResult).map(async (taxonomiesKey) => {
-                                    secondFile['Taxonomies' + index + taxonomiesKey.charAt(0).toUpperCase() + taxonomiesKey.slice(1)] = await taxonomiesResult[taxonomiesKey];
+                            if (jsonBody.results) {
+                                let taxonomiesResults = jsonBody.results[0].taxonomies;
+                                await taxonomiesResults.map(async (taxonomiesResult, index) => {
+                                    await Object.keys(taxonomiesResult).map(async (taxonomiesKey) => {
+                                        secondFile['Taxonomies' + index + taxonomiesKey.charAt(0).toUpperCase() + taxonomiesKey.slice(1)] = await taxonomiesResult[taxonomiesKey];
+                                    })
                                 })
-                            })
-                            delete secondFile['TaxonomiesCode']
-                            delete secondFile['TaxonomiesPrimary']
+                                delete secondFile['TaxonomiesCode']
+                                delete secondFile['TaxonomiesPrimary']
 
-                            let basicResult = jsonBody.results[0].basic;
-                            await Object.keys(basicResult).map(async (basicKey) => {
-                                const matchKey = basicKey.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, key => { return key.toUpperCase() });
-                                if (matchKey in secondFile) {
-                                    secondFile[matchKey] = await basicResult[basicKey];
-                                }
-                            })
-                            let mailAddress = jsonBody.results[0].addresses[0];
-                            await Object.keys(mailAddress).map(async (mailAddressKey) => {
-                                const matchKey = 'Mail' + mailAddressKey.replace(/(?:_|\b)(\w)/g, key => { return key.toUpperCase() });
-                                if (matchKey in secondFile) {
-                                    secondFile[matchKey] = await mailAddress[mailAddressKey];
-                                }
-                            })
-                            secondFile['COVERED_RECIPIENT_PHYSICIAN_PRIMARY_TYPE'] = jsonBody.results[0].enumeration_type;
-                            let locationAddress = jsonBody.results[0].addresses[0];
-                            await Object.keys(locationAddress).map(async (locationAddressKey) => {
-                                const matchKey = 'Loc' + locationAddressKey.replace(/(?:_|\b)(\w)/g, key => { return key.toUpperCase() });
-                                if (matchKey in secondFile) {
-                                    secondFile[matchKey] = await locationAddress[locationAddressKey];
-                                }
-                            })
+                                let basicResult = jsonBody.results[0].basic;
+                                await Object.keys(basicResult).map(async (basicKey) => {
+                                    const matchKey = basicKey.replace(/_/g, ' ').replace(/(?: |\b)(\w)/g, key => { return key.toUpperCase() });
+                                    if (matchKey in secondFile) {
+                                        secondFile[matchKey] = await basicResult[basicKey];
+                                    }
+                                })
+                                let mailAddress = jsonBody.results[0].addresses[0];
+                                await Object.keys(mailAddress).map(async (mailAddressKey) => {
+                                    const matchKey = 'Mail' + mailAddressKey.replace(/(?:_|\b)(\w)/g, key => { return key.toUpperCase() });
+                                    if (matchKey in secondFile) {
+                                        secondFile[matchKey] = await mailAddress[mailAddressKey];
+                                    }
+                                })
+                                secondFile['COVERED_RECIPIENT_PHYSICIAN_PRIMARY_TYPE'] = jsonBody.results[0].enumeration_type;
+                                let locationAddress = jsonBody.results[0].addresses[0];
+                                await Object.keys(locationAddress).map(async (locationAddressKey) => {
+                                    const matchKey = 'Loc' + locationAddressKey.replace(/(?:_|\b)(\w)/g, key => { return key.toUpperCase() });
+                                    if (matchKey in secondFile) {
+                                        secondFile[matchKey] = await locationAddress[locationAddressKey];
+                                    }
+                                })
+                            }
                             if (req.files.length == 2) {
                                 //merge file
                                 let firstFileKeys = Object.keys(firstFile)
