@@ -13,8 +13,8 @@ var cron = require('./tools/cronjob.js')
 global.__basedir = __dirname;
 
 // var routes = require('./routes/auth.js')(app)
-var privateKey = fs.readFileSync('./s166-62-92-227.secureserver.net.key', 'utf8');
-var certificate = fs.readFileSync('./s166-62-92-227.secureserver.net.crt', 'utf8');
+var privateKey = fs.readFileSync('./sslprivatekeymarch2019.key', 'utf8');
+var certificate = fs.readFileSync('./sslcertificatemarch2019.crt', 'utf8');
 
 var credentials = { key: privateKey, cert: certificate };
 app.set('views', path.join(__dirname, 'views'))
